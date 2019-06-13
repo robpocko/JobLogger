@@ -1,0 +1,42 @@
+﻿<Page
+    x:Class="JobLogger.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:JobLogger"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid>
+        <NavigationView x:Name="NavView" 
+                    ItemInvoked="NavView_ItemInvoked" 
+                    Loaded="NavView_Loaded" 
+                    SelectionChanged="NavView_SelectionChanged" 
+                    Header="Job Logger">
+
+            <!--<NavigationView.MenuItems>
+                <NavigationViewItem Icon="AllApps" Content="Requirements" Tag="requirements" ToolTipService.ToolTip="Requirements" />
+                <NavigationViewItem Icon="People" Content="Interviews" Tag="interviews" ToolTipService.ToolTip="Interviews" />
+                <NavigationViewItem Content="Agencies" Tag="agencies">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xEC07;" ToolTipService.ToolTip="Agencies" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Companies" Tag="companies">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE825;" ToolTipService.ToolTip="Companies"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.MenuItems>-->
+
+            <Frame x:Name="ContentFrame" Margin="24" Background="#FF4AE31C">
+                <Frame.ContentTransitions>
+                    <TransitionCollection>
+                        <NavigationThemeTransition/>
+                    </TransitionCollection>
+                </Frame.ContentTransitions>
+            </Frame>
+
+        </NavigationView>
+    </Grid>
+</Page>

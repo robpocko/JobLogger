@@ -1,0 +1,109 @@
+﻿<Page
+    x:Class="JobLogger.Views.TaskLogs.TaskLogsList"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:c="using:JobLogger.Controls"
+    xmlns:local="using:JobLogger.Views.TaskLogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:data="using:JobLogger.AppSystem.DataAccess"
+	mc:Ignorable="d" 
+    Loaded="Page_Loaded">
+
+    <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource MediumWindowSnapPoint}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ContentContainer.Margin" Value="20,0,24,0"/>
+                        <Setter Target="title.Style" Value="{StaticResource PageTitleTextBlockStyle}"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource MinWindowSnapPoint}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ContentContainer.Margin" Value="0,0,12,0"/>
+                        <Setter Target="title.Style" Value="{StaticResource NarrowPageTitleTextBlockStyle}"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <c:PageHeader x:Name="pageHeader"  Grid.Row="0">
+            <c:PageHeader.HeaderContent>
+                <TextBlock x:Name="title" Style="{StaticResource PageTitleTextBlockStyle}" Text="Task Logs"/>
+            </c:PageHeader.HeaderContent>
+        </c:PageHeader>
+
+        <Grid Grid.Row="1" x:Name="ContentContainer">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <RelativePanel BorderThickness="0" Margin="0,20,0,20">
+                <Button 
+                    Name="ButtonAddTask"
+                    RelativePanel.AlignRightWithPanel="True" Click="ButtonAddTask_Click">
+                    <TextBlock>
+                        <Run FontFamily="Segoe MDL2 Assets">&#xE710;</Run> Add New Task Log Entry
+                    </TextBlock>
+                </Button>
+            </RelativePanel>
+
+            <Grid Name="GridHeader" Grid.Row="1" Style="{StaticResource GridHeaderStyle}" Background="#FF1F4CB7" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                    <ColumnDefinition Width="4.5*"></ColumnDefinition>
+                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="ID" Margin="5,5,0,5" Foreground="White" />
+                <TextBlock Grid.Column="1" Text="Log Entry"  Margin="5,5,0,5" Foreground="White" />
+                <TextBlock Grid.Column="2" Text="Log Date"  Margin="5,5,0,5" Foreground="White" />
+            </Grid>
+
+            <ListView 
+				Grid.Row="2"
+				x:Name="taskList" 
+				IsSynchronizedWithCurrentItem="False"
+				ScrollViewer.VerticalScrollBarVisibility="Visible" 
+				DoubleTapped="taskList_DoubleTapped">
+                
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="data:TaskLogsAPI">
+                        <Grid Background="White">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.5*" ></ColumnDefinition>
+                                <ColumnDefinition Width="4.5*"></ColumnDefinition>
+                                <ColumnDefinition Width="0.5*" ></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" Text="{x:Bind id}" HorizontalAlignment="Left"  Margin="5,5,0,5"  />
+                            <TextBlock Grid.Column="1" Text="{x:Bind description}" HorizontalAlignment="Left"  Margin="5,5,0,5"  />
+                            <TextBlock Grid.Column="2" Text="{x:Bind logDateInternal}" HorizontalAlignment="Left"  Margin="5,5,0,5"  />
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </Grid>
+</Page>

@@ -1,0 +1,98 @@
+﻿<Page
+    x:Class="JobLogger.Views.Tasks.TaskEdit"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:c="using:JobLogger.Controls"
+    xmlns:local="using:JobLogger.Views.Tasks"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" 
+    Loaded="Page_Loaded" 
+    Width="Auto">
+
+    <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource MediumWindowSnapPoint}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ContentContainer.Margin" Value="20,0,24,0"/>
+                        <Setter Target="title.Style" Value="{StaticResource PageTitleTextBlockStyle}"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource MinWindowSnapPoint}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ContentContainer.Margin" Value="0,0,12,0"/>
+                        <Setter Target="title.Style" Value="{StaticResource NarrowPageTitleTextBlockStyle}"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <c:PageHeader x:Name="pageHeader"  Grid.Row="0">
+            <c:PageHeader.HeaderContent>
+                <TextBlock x:Name="title" Style="{StaticResource PageTitleTextBlockStyle}" Text="Task / Bug Details"/>
+            </c:PageHeader.HeaderContent>
+        </c:PageHeader>
+
+        <Grid Grid.Row="1"  x:Name="ContentContainer">
+            <StackPanel Grid.Row="1" Margin="0,20,24,0" HorizontalAlignment="Left" Width="Auto">
+                <TextBox
+                    x:Name="TextTaskID"
+                    Header="Task ID"
+                    Text="{x:Bind task.id, Mode=TwoWay}"
+                    Width="150"
+                    HorizontalAlignment="Left"
+                    />
+                <TextBox
+                x:Name="TaskTitle"
+                Text="{x:Bind task.title, Mode=TwoWay}"
+                HorizontalAlignment="Left"
+                Margin="0,20,0,0"
+                Width="800"
+                VerticalAlignment="Top"
+                TextAlignment="Left"
+                Header="Title" />
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                    <ComboBox 
+					    x:Name="ComboBoxTaskType" 
+					    Header="Task Type" 
+					    HorizontalAlignment="Left"
+                        Margin="0,20,0,0"
+                        Width="150"
+					    SelectedItem="{x:Bind task.taskType, Mode=TwoWay}"/>
+                    <CheckBox 
+                        x:Name="CheckBoxIsActive" 
+                        IsChecked="{x:Bind task.isActive, Mode=TwoWay}" 
+                        Content="Is Active"
+                        Margin="124,30,0,0"/>
+                </StackPanel>
+
+                <TextBlock
+                    x:Name="TextBlockRequirementTitle"
+                    Text="{x:Bind task.requirement.title}"
+                    Margin="0,20,0,0" DoubleTapped="TextBlockRequirementTitle_DoubleTapped"
+                    />
+                <Button
+                    x:Name="SaveButton" 
+                    Content="Save" 
+                    Click="SaveButton_Click"
+                    Margin="0,30,0,0"
+                    />
+            </StackPanel>
+            
+        </Grid>
+        
+    </Grid>
+</Page>

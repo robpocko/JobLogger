@@ -1,0 +1,111 @@
+﻿<Page
+    x:Class="JobLogger.Views.CheckIns.CheckInEdit"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:c="using:JobLogger.Controls"
+    xmlns:local="using:JobLogger.Views.CheckIns"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:system="using:System"
+    xmlns:appSystem="using:JobLogger.AppSystem"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" 
+    Loaded="Page_Loaded"
+    Width="Auto">
+
+    <Page.Resources>
+        <appSystem:DateConverter x:Key="DateConverter"/>
+    </Page.Resources>
+    
+    <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource MediumWindowSnapPoint}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ContentContainer.Margin" Value="20,0,24,0"/>
+                        <Setter Target="title.Style" Value="{StaticResource PageTitleTextBlockStyle}"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource MinWindowSnapPoint}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ContentContainer.Margin" Value="0,0,12,0"/>
+                        <Setter Target="title.Style" Value="{StaticResource NarrowPageTitleTextBlockStyle}"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <c:PageHeader x:Name="pageHeader"  Grid.Row="0">
+            <c:PageHeader.HeaderContent>
+                <TextBlock x:Name="title" Style="{StaticResource PageTitleTextBlockStyle}" Text="CheckIn Details"/>
+            </c:PageHeader.HeaderContent>
+        </c:PageHeader>
+
+        <Grid Grid.Row="1" x:Name="ContentContainer">
+            <StackPanel Grid.Row="1" Margin="0,20,24,0" HorizontalAlignment="Left" Width="Auto">
+                <TextBox
+                    x:Name="TaskDescription"
+                    Header="Task"
+                    Text="{x:Bind checkIn.taskLog.description, Mode=OneWay}"
+                    IsReadOnly="True"
+                    Width="800"
+                    TextWrapping="Wrap"
+                    />
+                <TextBox 
+                    x:Name="CheckInId"
+                    Header="ID"
+                    Text="{x:Bind checkIn.id, Mode=TwoWay}"
+                    Width="150"
+                    HorizontalAlignment="Left"
+                    Margin="0,20,0,0"
+                    />
+                <TextBox
+                    x:Name="CheckInComment"
+                    Header="Comment"
+                    Text="{x:Bind checkIn.comment, Mode=TwoWay}"
+                    Width="800"
+                    TextWrapping="Wrap"
+                    Margin="0,20,0,0"
+                    />
+                <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+                    <CalendarDatePicker
+                        x:Name="CheckInDate"
+                        Header="Date of CheckIn"
+                        Date="{x:Bind checkIn.checkInTimeInternal, Mode=TwoWay, Converter={StaticResource DateConverter}}"
+                        DateFormat="{}{day.integer} {month.full} {year.full}"
+                        />
+                    <TimePicker
+                        x:Name="CheckInTime"
+                        Header="Time of CheckIn"
+                        Time="{x:Bind appSystem:JLHelpers.TimeFromDateTime(checkIn.checkInTimeInternal)}"
+                        ClockIdentifier="12HourClock"
+                        Margin="20,0,0,0"
+                        />
+                    <ComboBox
+                        x:Name="CodeBranchPicker"
+                        Header="Code Branch"
+                        Width="200"
+                        Margin="20,0,0,0" SelectionChanged="CodeBranchPicker_SelectionChanged"
+                        />
+                </StackPanel>
+                <Button 
+                    x:Name="SaveButton"
+                    Content="Save"
+                    Margin="0,30,0,0" Click="SaveButton_Click"
+                    />
+            </StackPanel>
+        </Grid>
+        
+    </Grid>
+</Page>
