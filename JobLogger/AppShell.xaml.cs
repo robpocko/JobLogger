@@ -60,6 +60,11 @@ namespace JobLogger
                     Symbol = Symbol.ThreeBars,
                     Label = "Code Branches",
                     DestPage = typeof(Views.CodeBranches.CodeBranchesList)
+                },
+                new NavMenuItem()
+                {
+                    Symbol = Symbol.Page,
+                    Label = "Reports"
                 }
             });
 

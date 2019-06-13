@@ -168,7 +168,54 @@ namespace Tests
                                     .Single();
 
                 Assert.AreEqual(1, fetchedTask.Logs.Count());
+                Assert.AreEqual(1, fetchedTask.Logs.First().CheckIns.Count());
+                Assert.AreEqual(1, fetchedTask.Logs.First().CheckIns.First().TaskCheckIns.Count());
+            }
+        }
 
+        [Test]
+        public void Test6()
+        {
+            using (JobLoggerDbContext db = new JobLoggerDbContext())
+            {
+                int featureCount = db.Features.ToArray().Count();
+                int requirementCount = db.Requirements.ToArray().Count();
+                int taskCount = db.Tasks.ToArray().Count();
+                int taskLogCount = db.TaskLogs.ToArray().Count();
+                int checkInCount = db.CheckIns.ToArray().Count();
+                int taskCheckInCount = db.TaskCheckIns.ToArray().Count();
+
+                Requirement requirement = new RequirementBF(db).Create(
+                    new Requirement { ID = 5, Title = "Requirement Number 5", Status = RequirementStatus.Active } );
+
+                Assert.AreEqual(featureCount + 0, db.Features.ToArray().Count());
+                Assert.AreEqual(requirementCount + 1, db.Requirements.ToArray().Count());
+                Assert.AreEqual(taskCount + 0, db.Tasks.ToArray().Count());
+                Assert.AreEqual(taskLogCount + 0, db.TaskLogs.ToArray().Count());
+                Assert.AreEqual(checkInCount + 0, db.CheckIns.ToArray().Count());
+                Assert.AreEqual(taskCheckInCount + 0, db.TaskCheckIns.ToArray().Count());
+
+                Task newTask = new Task
+                {
+                    ID = 9,
+                    Title = "Task Number 9",
+                    IsActive = true,
+                    TaskType = TaskType.Task,
+                    RequirementID = 5
+                };
+                newTask = new TaskBF(db).Create(newTask);
+                Assert.AreEqual(featureCount + 0, db.Features.ToArray().Count());
+                Assert.AreEqual(requirementCount + 1, db.Requirements.ToArray().Count());
+                Assert.AreEqual(taskCount + 1, db.Tasks.ToArray().Count());
+                Assert.AreEqual(taskLogCount + 0, db.TaskLogs.ToArray().Count());
+                Assert.AreEqual(checkInCount + 0, db.CheckIns.ToArray().Count());
+                Assert.AreEqual(taskCheckInCount + 0, db.TaskCheckIns.ToArray().Count());
+
+                Requirement fetchedRequirement = db.Requirements
+                                                    .Where(r => r.ID == 5)
+                                                    .Include(t => t.Tasks)
+                                                    .Single();
+                Assert.AreEqual(1, fetchedRequirement.Tasks.Count());
             }
         }
     }

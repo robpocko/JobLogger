@@ -83,11 +83,6 @@ namespace JobLogger.Views.Requirements
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void TaskList_DoubleTapped(object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
         {
             ListView listView = sender as ListView;
@@ -98,6 +93,16 @@ namespace JobLogger.Views.Requirements
             }
 
             TaskAPI task = listView.SelectedItem as TaskAPI;
+
+            ((Frame)Parent).Navigate(
+                typeof(Tasks.TaskEdit),
+                task,
+                new Windows.UI.Xaml.Media.Animation.DrillInNavigationTransitionInfo());
+        }
+
+        private void AddTaskButton_Click(object sender, RoutedEventArgs e)
+        {
+            TaskAPI task = new TaskAPI { requirementID = long.Parse(requirement.id), isActive = true, isNew = true };
 
             ((Frame)Parent).Navigate(
                 typeof(Tasks.TaskEdit),
