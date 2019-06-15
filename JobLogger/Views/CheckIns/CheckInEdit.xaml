@@ -57,7 +57,7 @@
                 <TextBox
                     x:Name="TaskDescription"
                     Header="Task"
-                    Text="{x:Bind checkIn.taskLog.description, Mode=OneWay}"
+                    Text="{x:Bind checkIn.taskLog.description, Mode=TwoWay}"
                     IsReadOnly="True"
                     Width="800"
                     TextWrapping="Wrap"

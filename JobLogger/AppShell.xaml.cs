@@ -64,7 +64,8 @@ namespace JobLogger
                 new NavMenuItem()
                 {
                     Symbol = Symbol.Page,
-                    Label = "Reports"
+                    Label = "Reports",
+                    DestPage=typeof(Views.Reports.Reports)
                 }
             });
 
