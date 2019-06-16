@@ -11,93 +11,94 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" 
     Loaded="Page_Loaded" 
     Width="Auto">
-
-    <Grid>
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="{StaticResource MediumWindowSnapPoint}" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="ContentContainer.Margin" Value="20,0,24,0"/>
-                        <Setter Target="title.Style" Value="{StaticResource PageTitleTextBlockStyle}"/>
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="{StaticResource MinWindowSnapPoint}" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="ContentContainer.Margin" Value="0,0,12,0"/>
-                        <Setter Target="title.Style" Value="{StaticResource NarrowPageTitleTextBlockStyle}"/>
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
+    
+    <ScrollViewer>
+        <Grid>
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup>
+                    <VisualState>
+                        <VisualState.StateTriggers>
+                            <AdaptiveTrigger MinWindowWidth="{StaticResource MediumWindowSnapPoint}" />
+                        </VisualState.StateTriggers>
+                        <VisualState.Setters>
+                            <Setter Target="ContentContainer.Margin" Value="20,0,24,0"/>
+                            <Setter Target="title.Style" Value="{StaticResource PageTitleTextBlockStyle}"/>
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState>
+                        <VisualState.StateTriggers>
+                            <AdaptiveTrigger MinWindowWidth="{StaticResource MinWindowSnapPoint}" />
+                        </VisualState.StateTriggers>
+                        <VisualState.Setters>
+                            <Setter Target="ContentContainer.Margin" Value="0,0,12,0"/>
+                            <Setter Target="title.Style" Value="{StaticResource NarrowPageTitleTextBlockStyle}"/>
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
         
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-        <c:PageHeader x:Name="pageHeader"  Grid.Row="0">
-            <c:PageHeader.HeaderContent>
-                <TextBlock x:Name="title" Style="{StaticResource PageTitleTextBlockStyle}" Text="Requirement Details"/>
-            </c:PageHeader.HeaderContent>
-        </c:PageHeader>
+            <c:PageHeader x:Name="pageHeader"  Grid.Row="0">
+                <c:PageHeader.HeaderContent>
+                    <TextBlock x:Name="title" Style="{StaticResource PageTitleTextBlockStyle}" Text="Requirement Details"/>
+                </c:PageHeader.HeaderContent>
+            </c:PageHeader>
 
-        <Grid Grid.Row="1" x:Name="ContentContainer">
-            <StackPanel Grid.Row="1" Margin="0,20,24,0" HorizontalAlignment="Left" Width="Auto">
-                <TextBox
-                    x:Name="TextRequirementID"
-                    Header="Requirement ID"
-                    Width="150"
-                    HorizontalAlignment="Left"
-                    Text="{x:Bind requirement.id, Mode=TwoWay}"
-                    />
-                <TextBox
-                x:Name="RequirementTitle"
-                Text="{x:Bind requirement.title, Mode=TwoWay}"
-                HorizontalAlignment="Left"
-                Margin="0,20,0,0"
-                Width="800"
-                VerticalAlignment="Top"
-                TextAlignment="Left"
-                Header="Title"
-                TextWrapping="Wrap"
-                AcceptsReturn="True"
-                MaxLength="255"
-                />
-                <ComboBox 
+            <Grid Grid.Row="1" x:Name="ContentContainer" Margin="20,0,20,0">
+                <StackPanel Grid.Row="1" Margin="0,20,24,0" HorizontalAlignment="Left" Width="Auto">
+                    <TextBox
+                        x:Name="TextRequirementID"
+                        Header="Requirement ID"
+                        Width="150"
+                        HorizontalAlignment="Left"
+                        Text="{x:Bind requirement.id, Mode=TwoWay}"
+                        />
+                    <TextBox
+                        x:Name="RequirementTitle"
+                        Text="{x:Bind requirement.title, Mode=TwoWay}"
+                        HorizontalAlignment="Left"
+                        Margin="0,20,0,0"
+                        Width="800"
+                        VerticalAlignment="Top"
+                        TextAlignment="Left"
+                        Header="Title"
+                        TextWrapping="Wrap"
+                        AcceptsReturn="True"
+                        MaxLength="255"
+                        />
+                    <ComboBox 
 					    x:Name="ComboBoxStatus" 
 					    Header="Status" 
 					    HorizontalAlignment="Left"
 					    SelectedItem="{x:Bind requirement.status, Mode=TwoWay}" Margin="0,20,0,0" Width="150"/>
-                <Button 
+                    <Button 
                     x:Name="AddTaskButton"
                     Content="New Task / Bug"
                     HorizontalAlignment="Right" Click="AddTaskButton_Click"
                     />
 
-                <Grid 
+                    <Grid 
                     Name="GridHeader" 
                     Grid.Row="1" 
                     Style="{StaticResource GridHeaderStyle}" 
                     Background="#FF1F4CB7"
                     Margin="0,20,0,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.5*"></ColumnDefinition>
-                        <ColumnDefinition Width="4.5*"></ColumnDefinition>
-                        <ColumnDefinition Width="0.5*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                            <ColumnDefinition Width="4.5*"></ColumnDefinition>
+                            <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Column="0" Text="ID" Margin="5,5,0,5" Foreground="White" />
-                    <TextBlock Grid.Column="1" Text="Task"  Margin="5,5,0,5" Foreground="White" />
-                    <TextBlock Grid.Column="2" Text="Type" Margin="5,5,0,5" Foreground="White" />
-                </Grid>
+                        <TextBlock Grid.Column="0" Text="ID" Margin="5,5,0,5" Foreground="White" />
+                        <TextBlock Grid.Column="1" Text="Task"  Margin="5,5,0,5" Foreground="White" />
+                        <TextBlock Grid.Column="2" Text="Type" Margin="5,5,0,5" Foreground="White" />
+                    </Grid>
 
-                <ListView 
+                    <ListView 
 				    Grid.Row="2"
 				    x:Name="taskList" 
 				    IsSynchronizedWithCurrentItem="False"
@@ -105,34 +106,38 @@
                     DoubleTapped="TaskList_DoubleTapped" 
 				    >
 
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
-                        </Style>
-                    </ListView.ItemContainerStyle>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
 
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="data:TaskAPI" >
-                            <Grid Background="White">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="0.5*" ></ColumnDefinition>
-                                    <ColumnDefinition Width="4.5*"></ColumnDefinition>
-                                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="data:TaskAPI" >
+                                <Grid Background="White">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="0.5*" ></ColumnDefinition>
+                                        <ColumnDefinition Width="4.5*"></ColumnDefinition>
+                                        <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
 
-                                <TextBlock Grid.Column="0" Text="{x:Bind id}" HorizontalAlignment="Left"  Margin="5,5,0,5"  />
-                                <TextBlock Grid.Column="1" Text="{x:Bind title}" HorizontalAlignment="Left"  Margin="5,5,0,5"  />
-                                <TextBlock Grid.Column="2" Text="{x:Bind taskType}" HorizontalAlignment="Left"  Margin="5,5,0,5" />
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                                    <TextBlock Grid.Column="0" Text="{x:Bind id}" HorizontalAlignment="Left"  Margin="5,5,0,5"  />
+                                    <TextBlock Grid.Column="1" Text="{x:Bind title}" HorizontalAlignment="Left"  Margin="5,5,0,5"  />
+                                    <TextBlock Grid.Column="2" Text="{x:Bind taskType}" HorizontalAlignment="Left"  Margin="5,5,0,5" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
 
-                <Button
-                    x:Name="SaveButton" Content="Save" Click="SaveButton_Click" Margin="0,30,0,0"
+                    <Button
+                        x:Name="SaveButton" 
+                        Content="Save" 
+                        Click="SaveButton_Click" 
+                        Margin="0,30,0,0"
                     />
-            </StackPanel>
+                </StackPanel>
+            </Grid>
         </Grid>
-    </Grid>
+    </ScrollViewer> 
 </Page>

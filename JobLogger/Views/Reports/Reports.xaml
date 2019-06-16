@@ -9,8 +9,8 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid VerticalAlignment="Top">
-        <muxc:MenuBar>
+    <Grid VerticalAlignment="Stretch" Background="#FF14B918">
+        <muxc:MenuBar Background="Bisque">
             <muxc:MenuBarItem Title="Time Sheets">
                 <MenuFlyoutItem Text="New"/>
                 <MenuFlyoutItem Text="Open..."/>
@@ -33,5 +33,9 @@
                 <MenuFlyoutItem Text="About"/>
             </muxc:MenuBarItem>
         </muxc:MenuBar>
+        
+        <Button
+            Content="BUtton" HorizontalAlignment="Left" Margin="0,73,0,0" VerticalAlignment="Top"
+            />
     </Grid>
 </Page>
