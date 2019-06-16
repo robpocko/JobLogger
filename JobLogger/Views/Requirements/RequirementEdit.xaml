@@ -76,10 +76,11 @@
 					    HorizontalAlignment="Left"
 					    SelectedItem="{x:Bind requirement.status, Mode=TwoWay}" Margin="0,20,0,0" Width="150"/>
                     <Button 
-                    x:Name="AddTaskButton"
-                    Content="New Task / Bug"
-                    HorizontalAlignment="Right" Click="AddTaskButton_Click"
-                    />
+                        x:Name="AddTaskButton"
+                        Content="New Task / Bug"
+                        HorizontalAlignment="Right" Click="AddTaskButton_Click"
+                        IsEnabled="{x:Bind requirement.isNotNew}"
+                        />
 
                     <Grid 
                     Name="GridHeader" 

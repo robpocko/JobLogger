@@ -78,6 +78,7 @@
                     Margin="0,0,0,0" 
                     VerticalAlignment="Center" 
                     Click="AddRequirementButton_Click"
+                    IsEnabled="{x:Bind feature.isNotNew}"
                     />
 
                 <Grid 

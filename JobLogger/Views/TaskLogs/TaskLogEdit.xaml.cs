@@ -80,6 +80,8 @@ namespace JobLogger.Views.TaskLogs
                 TaskBugPicker.Visibility = Visibility.Collapsed;
                 TaskBugTitle.Visibility = Visibility.Visible;
                 TaskBugTitle.Text = taskLog?.task?.title ?? string.Empty;
+
+                this.Bindings.Update();
             }
         }
 

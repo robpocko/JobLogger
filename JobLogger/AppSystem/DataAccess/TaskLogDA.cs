@@ -35,6 +35,8 @@ namespace JobLogger.AppSystem.DataAccess
         [DataMember]
         public virtual ICollection<CheckInAPI> checkIns { get; set; }
 
+        public bool IsNotNew { get { return id > 0; } }
+
         [OnDeserialized]
         internal void OnDeserialized(StreamingContext context)
         {

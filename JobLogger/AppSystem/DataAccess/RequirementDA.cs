@@ -26,6 +26,7 @@ namespace JobLogger.AppSystem.DataAccess
         internal List<TaskAPI> tasks { get; set; }
         [DataMember]
         internal bool isNew { get; set; }
+        internal bool isNotNew { get { return !isNew; } }
 
         internal string ToJson()
         {

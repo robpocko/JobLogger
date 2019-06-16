@@ -102,10 +102,13 @@
                     <Button
                         x:Name="AddCheckInButton"
                         Content="Add CheckIn"
-                        Margin="0,0,20,0" Click="AddCheckInButton_Click"
+                        Margin="0,0,20,0" 
+                        Click="AddCheckInButton_Click"
+                        IsEnabled="{x:Bind taskLog.IsNotNew}"
                         />
                     <Button
                         Content="Add Comment"
+                        IsEnabled="{x:Bind taskLog.IsNotNew}"
                         />
                 </StackPanel>
                 <Button

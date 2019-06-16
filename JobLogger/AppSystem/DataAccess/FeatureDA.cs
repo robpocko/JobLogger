@@ -22,6 +22,7 @@ namespace JobLogger.AppSystem.DataAccess
         internal List<RequirementAPI> requirements { get; set; }
         [DataMember]
         internal bool isNew { get; set; }
+        internal bool isNotNew { get { return !isNew; } }
 
         internal string ToJson()
         {
