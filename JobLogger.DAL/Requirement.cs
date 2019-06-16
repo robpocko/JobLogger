@@ -17,6 +17,8 @@ namespace JobLogger.DAL
 
         public virtual ICollection<Task> Tasks { get; set; }
 
+        public long? FeatureID { get; set; }
+
         public Feature Feature { get; set; }
 
         public virtual ICollection<RequirementComment> Comments { get; set; }

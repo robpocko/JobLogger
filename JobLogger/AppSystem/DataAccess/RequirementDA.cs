@@ -19,6 +19,10 @@ namespace JobLogger.AppSystem.DataAccess
         [DataMember]
         internal RequirementStatus status { get; set; }
         [DataMember]
+        internal long? featureID { get; set; }
+        [DataMember]
+        internal FeatureAPI feature { get; set; }
+        [DataMember]
         internal List<TaskAPI> tasks { get; set; }
         [DataMember]
         internal bool isNew { get; set; }

@@ -8,6 +8,8 @@ namespace JobLogger.API.Model
     {
         public string Title { get; set; }
         public RequirementStatus Status { get; set; }
+        public long? FeatureID { get; set; }
+        public FeatureAPI Feature { get; set; }
         public virtual ICollection<TaskAPI> Tasks { get; set; }
 
         public static Requirement To(RequirementAPI item, bool includeTasks = true)
@@ -20,6 +22,8 @@ namespace JobLogger.API.Model
                     Title = item.Title,
                     Status = item.Status,
                     Tasks = includeTasks ? TaskAPI.To(item.Tasks) : null,
+                    FeatureID = item.FeatureID,
+                    Feature = FeatureAPI.To(item.Feature),
                     IsNew = item.IsNew
                 };
             }
@@ -39,6 +43,8 @@ namespace JobLogger.API.Model
                     Title = item.Title,
                     Status = item.Status,
                     Tasks = includeTasks ? TaskAPI.From(item.Tasks) : null,
+                    FeatureID = item.FeatureID,
+                    Feature = FeatureAPI.From(item.Feature, false),
                     IsNew = item.IsNew
                 };
             }

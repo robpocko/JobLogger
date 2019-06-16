@@ -218,5 +218,50 @@ namespace Tests
                 Assert.AreEqual(1, fetchedRequirement.Tasks.Count());
             }
         }
+
+        [Test]
+        public void Test7()
+        {
+            using (JobLoggerDbContext db = new JobLoggerDbContext())
+            {
+                int featureCount = db.Features.ToArray().Count();
+                int requirementCount = db.Requirements.ToArray().Count();
+                int taskCount = db.Tasks.ToArray().Count();
+                int taskLogCount = db.TaskLogs.ToArray().Count();
+                int checkInCount = db.CheckIns.ToArray().Count();
+                int taskCheckInCount = db.TaskCheckIns.ToArray().Count();
+
+                Feature feature = new FeatureBF(db).Create(
+                    new Feature { ID = 4, Title = "Feature Number 4", Status = RequirementStatus.Active });
+
+                Assert.AreEqual(featureCount + 1, db.Features.ToArray().Count());
+                Assert.AreEqual(requirementCount + 0, db.Requirements.ToArray().Count());
+                Assert.AreEqual(taskCount + 0, db.Tasks.ToArray().Count());
+                Assert.AreEqual(taskLogCount + 0, db.TaskLogs.ToArray().Count());
+                Assert.AreEqual(checkInCount + 0, db.CheckIns.ToArray().Count());
+                Assert.AreEqual(taskCheckInCount + 0, db.TaskCheckIns.ToArray().Count());
+
+                Requirement newRequirement = new Requirement
+                {
+                    ID = 6,
+                    Title = "Requirement Number 6",
+                    Status = RequirementStatus.Active,
+                    FeatureID = 4
+                };
+                newRequirement = new RequirementBF(db).Create(newRequirement);
+                Assert.AreEqual(featureCount + 1, db.Features.ToArray().Count());
+                Assert.AreEqual(requirementCount + 1, db.Requirements.ToArray().Count());
+                Assert.AreEqual(taskCount + 0, db.Tasks.ToArray().Count());
+                Assert.AreEqual(taskLogCount + 0, db.TaskLogs.ToArray().Count());
+                Assert.AreEqual(checkInCount + 0, db.CheckIns.ToArray().Count());
+                Assert.AreEqual(taskCheckInCount + 0, db.TaskCheckIns.ToArray().Count());
+
+                Feature fetchedFeature = db.Features
+                                                    .Where(f => f.ID == 4)
+                                                    .Include(r => r.Requirements)
+                                                    .Single();
+                Assert.AreEqual(1, fetchedFeature.Requirements.Count());
+            }
+        }
     }
 }

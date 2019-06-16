@@ -100,9 +100,14 @@ namespace JobLogger.Views.Features
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void AddRequirementButton_Click(object sender, RoutedEventArgs e)
         {
+            RequirementAPI requirement = new RequirementAPI { featureID = long.Parse(feature.id), status = RequirementStatus.Proposed, isNew = true };
 
+            ((Frame)Parent).Navigate(
+                typeof(Requirements.RequirementEdit),
+                requirement,
+                new Windows.UI.Xaml.Media.Animation.DrillInNavigationTransitionInfo());
         }
     }
 }

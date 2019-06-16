@@ -72,9 +72,12 @@
 					    HorizontalAlignment="Left"
 					    SelectedItem="{x:Bind feature.status, Mode=TwoWay}" Width="150"/>
                 <Button 
+                    x:Name="AddRequirementButton"
                     Content="New Requirement"
                     HorizontalAlignment="Right"
-                    Margin="0,0,0,0" VerticalAlignment="Center" Click="Button_Click"
+                    Margin="0,0,0,0" 
+                    VerticalAlignment="Center" 
+                    Click="AddRequirementButton_Click"
                     />
 
                 <Grid 
