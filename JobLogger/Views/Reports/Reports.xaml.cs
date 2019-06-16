@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JobLogger.AppSystem.DataAccess;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,6 +26,11 @@ namespace JobLogger.Views.Reports
         public Reports()
         {
             this.InitializeComponent();
+        }
+
+        private async void TimesheetToday_Click(object sender, RoutedEventArgs e)
+        {
+            List<TimesheetAPI> reportData = await Timesheet.Get(DateTime.Parse("13 June 2019"));
         }
     }
 }

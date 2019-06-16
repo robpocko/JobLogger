@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace JobLogger.BF
 {
-    public  class TaskLogBF
+    public class TaskLogBF
     {
         private JobLoggerDbContext db;
 

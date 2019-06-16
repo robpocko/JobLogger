@@ -2,6 +2,7 @@
     x:Class="JobLogger.Views.Reports.Reports"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:c="using:JobLogger.Controls"
     xmlns:local="using:JobLogger.Views.Reports"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,33 +10,61 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid VerticalAlignment="Stretch" Background="#FF14B918">
-        <muxc:MenuBar Background="Bisque">
-            <muxc:MenuBarItem Title="Time Sheets">
-                <MenuFlyoutItem Text="New"/>
-                <MenuFlyoutItem Text="Open..."/>
-                <MenuFlyoutItem Text="Save"/>
-                <MenuFlyoutItem Text="Exit"/>
-            </muxc:MenuBarItem>
+    <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource MediumWindowSnapPoint}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ContentContainer.Margin" Value="20,0,24,0"/>
+                        <Setter Target="title.Style" Value="{StaticResource PageTitleTextBlockStyle}"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource MinWindowSnapPoint}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ContentContainer.Margin" Value="0,0,12,0"/>
+                        <Setter Target="title.Style" Value="{StaticResource NarrowPageTitleTextBlockStyle}"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
 
-            <muxc:MenuBarItem Title="Features">
-                <MenuFlyoutItem Text="Undo"/>
-                <MenuFlyoutItem Text="Cut"/>
-                <MenuFlyoutItem Text="Copy"/>
-                <MenuFlyoutItem Text="Paste"/>
-            </muxc:MenuBarItem>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-            <muxc:MenuBarItem Title="Requirements">
-                <MenuFlyoutItem Text="About"/>
-            </muxc:MenuBarItem>
+        <c:PageHeader x:Name="pageHeader"  Grid.Row="0">
+            <c:PageHeader.HeaderContent>
+                <TextBlock x:Name="title" Style="{StaticResource PageTitleTextBlockStyle}" Text="Reports"/>
+            </c:PageHeader.HeaderContent>
+        </c:PageHeader>
 
-            <muxc:MenuBarItem Title="Tasks">
-                <MenuFlyoutItem Text="About"/>
-            </muxc:MenuBarItem>
-        </muxc:MenuBar>
-        
-        <Button
-            Content="BUtton" HorizontalAlignment="Left" Margin="0,73,0,0" VerticalAlignment="Top"
-            />
+        <Grid Grid.Row="1" x:Name="ContentContainer">
+            <StackPanel Orientation="Vertical" Background="AliceBlue">
+                <muxc:MenuBar VerticalAlignment="Top">
+                    <muxc:MenuBarItem Title="Time Sheets">
+                        <MenuFlyoutItem Text="For Today" Click="TimesheetToday_Click"/>
+                        <MenuFlyoutItem Text="For Yesterday"/>
+                        <MenuFlyoutItem Text="For other day"/>
+                    </muxc:MenuBarItem>
+
+                    <muxc:MenuBarItem Title="Features">
+                    </muxc:MenuBarItem>
+
+                    <muxc:MenuBarItem Title="Requirements">
+                    </muxc:MenuBarItem>
+
+                    <muxc:MenuBarItem Title="Tasks">
+                    </muxc:MenuBarItem>
+                </muxc:MenuBar>
+            </StackPanel>
+        </Grid>
     </Grid>
+
 </Page>
