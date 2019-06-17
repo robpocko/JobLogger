@@ -9,6 +9,7 @@
         internal static string CODEBRANCH_PATH  = "api/CodeBranch";
         internal static string TASKLOG_PATH     = "api/TaskLog";
         internal static string TIMESHEET_PATH   = "api/TimesheetReports";
+        internal static string TOOLS_PATH       = "api/Tools";
 
         internal static int FETCH_SIZE = 50;
     }

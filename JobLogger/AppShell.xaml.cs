@@ -1,4 +1,5 @@
-﻿using JobLogger.Controls;
+﻿using JobLogger.AppSystem.DataAccess;
+using JobLogger.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,7 +46,7 @@ namespace JobLogger
                 },
                 new NavMenuItem()
                 {
-                    Symbol = Symbol.Admin,
+                    Symbol = Symbol.Calendar,
                     Label = "Task Logs",
                     DestPage = typeof(Views.TaskLogs.TaskLogsList)
                 },
@@ -381,9 +382,14 @@ namespace JobLogger
             }
         }
 
-        private void SettingsNavPaneButton_Click(object sender, RoutedEventArgs e)
+        private  void SettingsNavPaneButton_Click(object sender, RoutedEventArgs e)
         {
             
+        }
+
+        private async void BackupToolMenu_Click(object sender, RoutedEventArgs e)
+        {
+            await Tools.BackupDatabase();
         }
     }
 }

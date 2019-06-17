@@ -138,6 +138,7 @@
     <Compile Include="AppSystem\DataAccess\TaskLogsDA.cs" />
     <Compile Include="AppSystem\DataAccess\TasksDA.cs" />
     <Compile Include="AppSystem\DataAccess\TimesheetDA.cs" />
+    <Compile Include="AppSystem\DataAccess\ToolsDA.cs" />
     <Compile Include="AppSystem\DateConverter.cs" />
     <Compile Include="AppSystem\Enums.cs" />
     <Compile Include="AppSystem\JLHelpers.cs" />

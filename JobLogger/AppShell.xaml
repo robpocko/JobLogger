@@ -89,6 +89,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="48"/>
                         <ColumnDefinition Width="48"/>
+                        <ColumnDefinition Width="48"/>
                     </Grid.ColumnDefinitions>
 
                     <!-- A custom ListView to display the items in the pane.  The automation Name is set in the ContainerContentChanging event. -->
@@ -119,7 +120,23 @@
                             Style="{StaticResource SplitViewPaneButtonStyle}"
                             Content="&#xE713;"
                             AutomationProperties.Name="Settings"
-                            ToolTipService.ToolTip="Settings" Click="SettingsNavPaneButton_Click"/>
+                            ToolTipService.ToolTip="Settings" 
+                            Click="SettingsNavPaneButton_Click"/>
+                    <Button x:Name="ToolsButton"
+                            Grid.Row="2"
+                            Grid.Column="3"
+                            Style="{StaticResource SplitViewPaneButtonStyle}"
+                            Content="&#xE90F;"
+                            AutomationProperties.Name="Tools"
+                            ToolTipService.ToolTip="Tools">
+                        <Button.Flyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem x:Name="BackupToolMenu" Text="Back-up data" Click="BackupToolMenu_Click"/>
+                                <MenuFlyoutItem x:Name="RestoreToolMenu" Text="Restore data"/>
+                            </MenuFlyout>
+                        </Button.Flyout>
+
+                    </Button>
                 </Grid>
             </SplitView.Pane>
 

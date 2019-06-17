@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using JobLogger.DAL;
+﻿using JobLogger.API.Model;
 using JobLogger.BF;
-using JobLogger.API.Model;
-using System;
-using System.Collections.Generic;
 using JobLogger.BF.ListModels;
+using JobLogger.DAL;
+using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace JobLogger.API.Controllers
 {

@@ -13,4 +13,10 @@
     <ProjectReference Include="..\JobLogger.DAL\JobLogger.DAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="System">
+      <HintPath>System</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
