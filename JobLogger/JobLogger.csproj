@@ -182,6 +182,9 @@
     <Compile Include="Views\Requirements\RequirementsList.xaml.cs">
       <DependentUpon>RequirementsList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Settings\Settings.xaml.cs">
+      <DependentUpon>Settings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TaskLogs\TaskLogEdit.xaml.cs">
       <DependentUpon>TaskLogEdit.xaml</DependentUpon>
     </Compile>
@@ -263,6 +266,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Requirements\RequirementsList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Settings\Settings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

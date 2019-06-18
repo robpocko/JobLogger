@@ -119,7 +119,7 @@ namespace JobLogger
 
             #region Added by RLP
             CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = false;
-            AppSettings.ServerUrl = @"http://localhost:24227";
+
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
             {
