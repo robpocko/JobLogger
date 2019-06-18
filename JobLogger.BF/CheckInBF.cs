@@ -58,7 +58,6 @@ namespace JobLogger.BF
                 return db.CheckIns
                             .Where(i => i.ID == id)
                             .Include(t => t.TaskLog)
-                            //.Include(b => b.CodeBranch)
                             .Single();
             }
             catch (Exception ex)

@@ -28,13 +28,6 @@ namespace JobLogger.AppSystem.DataAccess
                 try
                 {
                     var response = await client.PostAsync(uri, null);
-
-                    //DataContractJsonSerializer js =
-                    //    new DataContractJsonSerializer(typeof(List<TimesheetAPI>));
-                    //MemoryStream ms =
-                    //    new MemoryStream(System.Text.ASCIIEncoding.ASCII.GetBytes(response));
-
-                    //return (List<TimesheetAPI>)js.ReadObject(ms);
                 }
                 catch (Exception ex)
                 {

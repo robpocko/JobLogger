@@ -1,7 +1,6 @@
 ﻿using JobLogger.DAL;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace JobLogger.API.Model
 {

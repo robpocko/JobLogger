@@ -60,24 +60,6 @@ namespace JobLogger.AppSystem.UI
         public void Remove(object value)
         {
             throw new NotImplementedException();
-
-            /*
-             
-            if (!_storage.Remove(value))
-            {
-                return;
-            }
-
-            if (CollectionChanged == null)
-            {
-                return;
-            }
-
-            var args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, value);
-
-            CollectionChanged(this, args);
-
-            */
         }
 
         public void RemoveAt(int index)

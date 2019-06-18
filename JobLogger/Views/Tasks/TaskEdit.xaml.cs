@@ -98,7 +98,8 @@ namespace JobLogger.Views.Tasks
 
             if (dialogResult == ContentDialogResult.Primary)
             {
-
+                string text;
+                commentDialog.Comment.GetText(Windows.UI.Text.TextGetOptions.FormatRtf, out text);
             }
         }
     }

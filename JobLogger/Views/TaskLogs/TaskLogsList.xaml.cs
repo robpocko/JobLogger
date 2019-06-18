@@ -1,5 +1,4 @@
-﻿using JobLogger.AppSystem;
-using JobLogger.AppSystem.DataAccess;
+﻿using JobLogger.AppSystem.DataAccess;
 using JobLogger.AppSystem.UI;
 using System;
 using System.Threading.Tasks;

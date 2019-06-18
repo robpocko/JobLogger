@@ -83,7 +83,6 @@ namespace JobLogger.AppSystem.DataAccess
                     string.Format("{0}/{1}/{2}",
                     AppSettings.ServerUrl, APICommon.CHECKIN_PATH, id));
 
-                //  http://localhost:24227/api/CheckIn/79984
                 try
                 {
                     var response = await client.GetStringAsync(uri);

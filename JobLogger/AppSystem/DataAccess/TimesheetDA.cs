@@ -14,12 +14,8 @@ namespace JobLogger.AppSystem.DataAccess
     {
         [DataMember]
         public string taskStartTime { get; set; }
-        //[IgnoreDataMember]
-        //public TimeSpan taskStartTimeInternal { get; set; }
         [DataMember]
         public string taskEndTime { get; set; }
-        //[IgnoreDataMember]
-        //public TimeSpan taskEndTimeInternal { get; set; }
         [DataMember]
         public string description { get; set; }
         [DataMember]
