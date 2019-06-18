@@ -5,12 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Windows.Foundation;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using JobLogger.Views.Settings;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -384,7 +386,12 @@ namespace JobLogger
 
         private  void SettingsNavPaneButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            if (this.AppFrame.CurrentSourcePageType != typeof(Settings) )
+            {
+                this.AppFrame.Navigate(typeof(Settings));
+
+                NavMenuList.SelectedIndex = -1;
+            }
         }
 
         private async void BackupToolMenu_Click(object sender, RoutedEventArgs e)
