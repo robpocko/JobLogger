@@ -164,6 +164,9 @@
     <Compile Include="Views\CodeBranches\CodeBranchesList.xaml.cs">
       <DependentUpon>CodeBranchesList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\CommentDialog.xaml.cs">
+      <DependentUpon>CommentDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Features\FeatureEdit.xaml.cs">
       <DependentUpon>FeatureEdit.xaml</DependentUpon>
     </Compile>
@@ -236,6 +239,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CodeBranches\CodeBranchesList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CommentDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -90,5 +90,16 @@ namespace JobLogger.Views.Tasks
                 task.requirement,
                 new Windows.UI.Xaml.Media.Animation.DrillInNavigationTransitionInfo());
         }
+
+        private async void AddCommentButton_Click(object sender, RoutedEventArgs e)
+        {
+            CommentDialog commentDialog = new CommentDialog();
+            var dialogResult = await commentDialog.ShowAsync();
+
+            if (dialogResult == ContentDialogResult.Primary)
+            {
+
+            }
+        }
     }
 }

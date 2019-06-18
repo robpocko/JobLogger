@@ -78,7 +78,18 @@
                         Content="Is Active"
                         Margin="124,30,0,0"/>
                 </StackPanel>
-
+                <StackPanel Orientation="Horizontal" Margin="0,20,0,0" HorizontalAlignment="Right">
+                    <Button 
+                        x:Name="AddCommentButton"
+                        Content="Add Comment"
+                        Click="AddCommentButton_Click"
+                        />
+                    <Button 
+                        x:Name="ShowCommentsButton"
+                        Content="Show Comments"
+                        Margin="20,0,0,0"
+                        />
+                </StackPanel>
                 <TextBlock
                     x:Name="TextBlockRequirementTitle"
                     Text="{x:Bind task.requirement.title}"
