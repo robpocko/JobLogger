@@ -133,6 +133,7 @@
     <Compile Include="AppSystem\DataAccess\RequirementDA.cs" />
     <Compile Include="AppSystem\DataAccess\RequirementsDA.cs" />
     <Compile Include="AppSystem\DataAccess\TaskCheckInDA.cs" />
+    <Compile Include="AppSystem\DataAccess\TaskCommentDA.cs" />
     <Compile Include="AppSystem\DataAccess\TaskDA.cs" />
     <Compile Include="AppSystem\DataAccess\TaskLogDA.cs" />
     <Compile Include="AppSystem\DataAccess\TaskLogsDA.cs" />

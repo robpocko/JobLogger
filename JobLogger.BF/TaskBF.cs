@@ -70,6 +70,7 @@ namespace JobLogger.BF
                             .Include(c => c.CheckIns)
                             .Include(l => l.Logs)
                             .Include(r => r.Requirement)
+                            .Include(cc => cc.Comments)
                             .Single();
             }
             catch (Exception ex)

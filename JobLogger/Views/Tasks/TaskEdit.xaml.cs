@@ -1,6 +1,7 @@
 ﻿using JobLogger.AppSystem;
 using JobLogger.AppSystem.DataAccess;
 using System;
+using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -100,6 +101,10 @@ namespace JobLogger.Views.Tasks
             {
                 string text;
                 commentDialog.Comment.GetText(Windows.UI.Text.TextGetOptions.FormatRtf, out text);
+
+                if (task.comments == null) task.comments = new List<TaskCommentAPI>();
+
+                task.comments.Add(new TaskCommentAPI { comment = text });
             }
         }
     }

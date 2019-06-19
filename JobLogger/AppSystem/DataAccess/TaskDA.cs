@@ -25,6 +25,8 @@ namespace JobLogger.AppSystem.DataAccess
         [DataMember]
         internal RequirementAPI requirement { get; set; }
         [DataMember]
+        internal List<TaskCommentAPI> comments { get; set; }
+        [DataMember]
         internal List<TaskLogAPI> logs { get; set; }
         [DataMember]
         internal List<TaskCheckInAPI> checkIns { get; set; }
