@@ -85,6 +85,9 @@ namespace JobLogger.Views.CheckIns
 
         private async void SaveButton_Click(object sender, RoutedEventArgs e)
         {
+            //  need to adjust the time part, because I don't know how to make it bind properly
+            checkIn.checkInTimeInternal = checkIn.checkInTimeInternal.Date.Add(CheckInTime.Time);
+
             checkIn = await CheckIn.Save(checkIn);
 
             if (this.Frame.CanGoBack)
