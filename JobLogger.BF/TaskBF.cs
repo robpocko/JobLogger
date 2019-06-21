@@ -124,11 +124,26 @@ namespace JobLogger.BF
         {
             Task fetched = db.Tasks
                                 .Where(i => i.ID == item.ID)
+                                .Include(c => c.Comments)
+                                .OrderBy(a => a.Comments.OrderBy(b => b.ID))
                                 .Single();
 
             fetched.Title = item.Title;
             fetched.IsActive = item.IsActive;
             fetched.TaskType = item.TaskType;
+
+            foreach (var comment in fetched.Comments)
+            {
+                comment.Comment = item.Comments.Where(c => c.ID == comment.ID).Single().Comment;
+            }
+
+            foreach (var comment in item.Comments)
+            {
+                if (comment.ID <= 0)
+                {
+                    fetched.Comments.Add(comment);
+                }
+            }
 
             return fetched;
         }

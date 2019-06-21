@@ -263,5 +263,63 @@ namespace Tests
                 Assert.AreEqual(1, fetchedFeature.Requirements.Count());
             }
         }
+
+        [Test]
+        public void Test8()
+        {
+            using (JobLoggerDbContext db = new JobLoggerDbContext())
+            {
+                int featureCount = db.Features.ToArray().Count();
+                int requirementCount = db.Requirements.ToArray().Count();
+                int taskCount = db.Tasks.ToArray().Count();
+                int taskLogCount = db.TaskLogs.ToArray().Count();
+                int checkInCount = db.CheckIns.ToArray().Count();
+                int taskCheckInCount = db.TaskCheckIns.ToArray().Count();
+                int taskCommentCount = db.TaskComments.ToArray().Count();
+
+                Task task = new TaskBF(db).Create(
+                    new Task { ID = 10, Title = "Task Number 10", TaskType = TaskType.Task, IsActive = true });
+
+                Assert.AreEqual(featureCount + 0, db.Features.ToArray().Count());
+                Assert.AreEqual(requirementCount + 0, db.Requirements.ToArray().Count());
+                Assert.AreEqual(taskCount + 1, db.Tasks.ToArray().Count());
+                Assert.AreEqual(taskLogCount + 0, db.TaskLogs.ToArray().Count());
+                Assert.AreEqual(checkInCount + 0, db.CheckIns.ToArray().Count());
+                Assert.AreEqual(taskCheckInCount + 0, db.TaskCheckIns.ToArray().Count());
+                Assert.AreEqual(taskCommentCount + 0, db.TaskComments.ToArray().Count());
+
+                //  need to decouple object from db context
+                Task taskUI = new Task
+                {
+                    ID = task.ID,
+                    IsActive = task.IsActive,
+                    Requirement = task.Requirement,
+                    RequirementID = task.RequirementID,
+                    TaskType = task.TaskType,
+                    Title = task.Title
+                };
+
+                taskUI.Comments = new List<TaskComment>
+                {
+                    new TaskComment { Comment = "Testing 1 two free" }
+                };
+
+                taskUI = new TaskBF(db).Update(taskUI);
+
+                Assert.AreEqual(featureCount + 0, db.Features.ToArray().Count());
+                Assert.AreEqual(requirementCount + 0, db.Requirements.ToArray().Count());
+                Assert.AreEqual(taskCount + 1, db.Tasks.ToArray().Count());
+                Assert.AreEqual(taskLogCount + 0, db.TaskLogs.ToArray().Count());
+                Assert.AreEqual(checkInCount + 0, db.CheckIns.ToArray().Count());
+                Assert.AreEqual(taskCheckInCount + 0, db.TaskCheckIns.ToArray().Count());
+                Assert.AreEqual(taskCommentCount + 1, db.TaskComments.ToArray().Count());
+
+                Task fetchedTask = db.Tasks
+                                    .Where(t => t.ID == 10)
+                                    .Include(c => c.Comments)
+                                    .Single();
+                Assert.AreEqual(1, fetchedTask.Comments.Count());
+            }
+        }
     }
 }

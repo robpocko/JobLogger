@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:c="using:JobLogger.Controls"
     xmlns:local="using:JobLogger.Views.Tasks"
+    xmlns:appSystem="using:JobLogger.AppSystem"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -88,7 +89,15 @@
                         x:Name="ShowCommentsButton"
                         Content="Show Comments"
                         Margin="20,0,0,0"
-                        />
+                        Click="ShowCommentsButton_Click"
+                        >
+                        <ToolTipService.ToolTip>
+                            <ToolTip 
+                                x:Name="CommentsToolTip" 
+                                Content="{x:Bind appSystem:JLHelpers.ShowCommentToolTip(task.comments.Count, 'task')}" 
+                                />
+                        </ToolTipService.ToolTip>
+                    </Button>
                 </StackPanel>
                 <TextBlock
                     x:Name="TextBlockRequirementTitle"

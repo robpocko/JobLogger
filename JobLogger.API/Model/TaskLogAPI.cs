@@ -12,7 +12,6 @@ namespace JobLogger.API.Model
         public string Description { get; set; }
         public long? TaskID { get; set; }
         public TaskAPI Task { get; set; }
-
         public ICollection<CheckInAPI> CheckIns { get; set; }
 
         public static TaskLog To(TaskLogAPI item)

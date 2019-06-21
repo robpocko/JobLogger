@@ -13,9 +13,10 @@ namespace JobLogger.API.Model
         public RequirementAPI Requirement { get; set; }
         public ICollection<TaskCheckInAPI> CheckIns { get; set; }
         public ICollection<TaskLogAPI> Logs { get; set; }
+        public ICollection<TaskCommentAPI> Comments { get; set; }
 
 
-        public static Task To(TaskAPI item, bool includeTaskLogs = true)
+        public static Task To(TaskAPI item, bool includeTaskLogs = true, bool includeComments = true)
         {
             if (item == null)
             {
@@ -31,6 +32,7 @@ namespace JobLogger.API.Model
                     IsActive = item.IsActive,
                     CheckIns = TaskCheckInAPI.To(item.CheckIns),
                     Logs = includeTaskLogs ? TaskLogAPI.To(item.Logs) : null,
+                    Comments = includeComments ? TaskCommentAPI.To(item.Comments) : null,
                     RequirementID = item.RequirementID,
                     Requirement = RequirementAPI.To(item.Requirement),
                     IsNew = item.IsNew
@@ -39,7 +41,7 @@ namespace JobLogger.API.Model
 
         }
 
-        public static TaskAPI From(Task item, bool includeTaskLogs = true)
+        public static TaskAPI From(Task item, bool includeTaskLogs = true, bool includeComments = true)
         {
             if (item == null)
             {
@@ -55,6 +57,7 @@ namespace JobLogger.API.Model
                     IsActive = item.IsActive,
                     CheckIns = TaskCheckInAPI.From(item.CheckIns),
                     Logs = includeTaskLogs ? TaskLogAPI.From(item.Logs) : null,
+                    Comments = includeComments ? TaskCommentAPI.From(item.Comments) : null,
                     RequirementID = item.RequirementID,
                     Requirement = RequirementAPI.From(item.Requirement, false),
                     IsNew = item.IsNew

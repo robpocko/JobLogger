@@ -107,5 +107,13 @@ namespace JobLogger.Views.Tasks
                 task.comments.Add(new TaskCommentAPI { comment = text });
             }
         }
+
+        private void ShowCommentsButton_Click(object sender, RoutedEventArgs e)
+        {
+            ((Frame)Parent).Navigate(
+                typeof(CommentsViewer),
+                task.comments,
+                new Windows.UI.Xaml.Media.Animation.DrillInNavigationTransitionInfo());
+        }
     }
 }
