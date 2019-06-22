@@ -13,8 +13,8 @@ namespace JobLogger.API.Controllers.Reports
         public TimesheetReportsController([FromServices] JobLoggerDbContext db) : base(db)
         { }
 
-        [HttpGet("{TimesheetForDay}")]
-        [Route("{TimesheetForDay}")]
+        [HttpGet("{reportDate}")]
+        [Route("TimesheetForDay")]
         public List<TimesheetReportModel> TimesheetForDay(DateTime reportDate)
         {
             var items = new TimesheetReportBF(DB).GetTimesheetForDay(reportDate);

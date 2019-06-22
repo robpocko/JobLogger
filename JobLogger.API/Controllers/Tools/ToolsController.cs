@@ -10,9 +10,17 @@ namespace JobLogger.API.Controllers.Tools
         { }
 
         [HttpPost]
+        [Route("BackupDatabase")]
         public IActionResult BackupDatabase()
         {
-            return new ObjectResult("i did this");
+            return new ObjectResult("Doing a database backup");
+        }
+
+        [HttpPost]
+        [Route("RestoreDatabase")]
+        public IActionResult RestoreDatabase()
+        {
+            return new ObjectResult("Doing a database restore");
         }
     }
 }
