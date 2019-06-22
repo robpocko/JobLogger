@@ -52,13 +52,8 @@ namespace JobLogger.Views
 
                 currentComment = comments[0];
                 currentCommentIndex = 0;
-                Paragraph paragraph = new Paragraph();
-                Run run = new Run();
-                run.Text = currentComment.comment;
-                paragraph.Inlines.Add(run);
 
-                CommentText.Blocks.Add(paragraph);
-
+                CommentText.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, currentComment.comment);
             }
         }
 
@@ -68,13 +63,19 @@ namespace JobLogger.Views
             {
                 currentCommentIndex++;
                 currentComment = comments[currentCommentIndex];
-                
-                Paragraph paragraph = new Paragraph();
-                Run run = new Run();
-                run.Text = currentComment.comment;
-                paragraph.Inlines.Add(run);
 
-                CommentText.Blocks.Add(paragraph);
+                CommentText.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, currentComment.comment);
+            }
+        }
+
+        private void AppBarButton_Click_1(object sender, RoutedEventArgs e)
+        {
+            if (currentCommentIndex > 0)
+            {
+                currentCommentIndex--;
+                currentComment = comments[currentCommentIndex];
+
+                CommentText.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, currentComment.comment);
             }
         }
     }

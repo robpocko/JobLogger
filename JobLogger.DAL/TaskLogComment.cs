@@ -11,7 +11,6 @@ namespace JobLogger.DAL
         new public long ID { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "You must provide a comment")]
-        [MaxLength(1000, ErrorMessage = "The comment cannot be longer than 1000 characters")]
         [Display(Name = "Comment")]
         public string Comment { get; set; }
 

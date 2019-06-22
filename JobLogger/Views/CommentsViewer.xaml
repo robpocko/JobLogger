@@ -46,10 +46,10 @@
 
         <Grid Grid.Row="1" x:Name="ContentContainer">
             <CommandBar Background="Transparent" IsOpen="False" DefaultLabelPosition="Right">
-                <AppBarButton Icon="Previous" Label="Previous"/>
+                <AppBarButton Icon="Previous" Label="Previous" Click="AppBarButton_Click_1"/>
                 <AppBarButton Icon="Next" Label="Next" Click="AppBarButton_Click"/>
             </CommandBar>
-            <RichTextBlock
+            <RichEditBox
                 x:Name="CommentText"
                 Width="500" 
                 Height="385" 
@@ -58,9 +58,7 @@
                 Margin="2,0,1.2,0" 
                 VerticalAlignment="Stretch"
                 >
-                <Paragraph>
-                 </Paragraph>
-            </RichTextBlock>
+            </RichEditBox>
         </Grid>
 
     </Grid>
