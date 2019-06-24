@@ -54,6 +54,14 @@
 
         <Grid Grid.Row="1" x:Name="ContentContainer">
             <StackPanel Grid.Row="1" Margin="0,20,24,0" HorizontalAlignment="Left" Width="Auto">
+                <TextBox 
+                    x:Name="TaskId"
+                    Header="Task ID"
+                    Text="{x:Bind checkIn.taskLog.task.id, Mode=TwoWay}"
+                    Width="140"
+                    IsReadOnly="True"
+                    HorizontalAlignment="Left"
+                    />
                 <TextBox
                     x:Name="TaskDescription"
                     Header="Task"
