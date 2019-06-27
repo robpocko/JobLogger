@@ -25,6 +25,7 @@ namespace JobLogger.BF
                     db.Requirements.Add(item);
                     db.SaveChanges();
 
+                    MarkNotIsNew(item);
                     return item;
                 }
                 catch (Exception ex)
@@ -126,6 +127,18 @@ namespace JobLogger.BF
             fetched.Status = item.Status;
 
             return fetched;
+        }
+
+        internal static void MarkNotIsNew(Requirement item)
+        {
+            item.IsNew = false;
+            if (item.Tasks != null)
+            {
+                foreach (var task in item.Tasks)
+                {
+                    TaskBF.MarkNotIsNew(task);
+                }
+            }
         }
     }
 }

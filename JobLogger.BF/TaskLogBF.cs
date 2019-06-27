@@ -29,6 +29,7 @@ namespace JobLogger.BF
                         item.Task = db.Tasks.Where(t => t.ID == item.TaskID.Value).Single();
                     }
 
+                    MarkNotIsNew(item);
                     return item;
                 }
                 catch (Exception ex)
@@ -131,6 +132,17 @@ namespace JobLogger.BF
             fetched.StartTime = item.StartTime;
 
             return fetched;
+        }
+
+        internal static void MarkNotIsNew(TaskLog item)
+        {
+            if (item.CheckIns != null)
+            {
+                foreach (var checkIn in item.CheckIns)
+                {
+                    CheckInBF.MarkNotIsNew(checkIn);
+                }
+            }
         }
     }
 }

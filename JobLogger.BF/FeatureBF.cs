@@ -25,7 +25,7 @@ namespace JobLogger.BF
                     db.Features.Add(item);
                     db.SaveChanges();
 
-                    item.IsNew = false;
+                    MarkNotIsNew(item);
                     return item;
                 }
                 catch (Exception ex)
@@ -122,14 +122,7 @@ namespace JobLogger.BF
 
         private Feature FetchAndUpdate(Feature item)
         {
-            Feature fetched = db.Features
-                                .Where(i => i.ID == item.ID)
-                                .Include(feat => feat.Requirements)
-                                .ThenInclude(req => req.Tasks)
-                                .ThenInclude(task => task.Logs)
-                                .Include(feat => feat.Requirements).ThenInclude(req => req.Comments)
-                                
-                                .Single();
+            Feature fetched = Get(item.ID);
 
             fetched.Title = item.Title;
             fetched.Status = item.Status;
@@ -155,6 +148,18 @@ namespace JobLogger.BF
 
 
             return fetched;
+        }
+
+        internal static void MarkNotIsNew(Feature item)
+        {
+            item.IsNew = false;
+            if (item.Requirements != null)
+            {
+                foreach (var requirement in item.Requirements)
+                {
+                    RequirementBF.MarkNotIsNew(requirement);
+                }
+            }
         }
     }
 }

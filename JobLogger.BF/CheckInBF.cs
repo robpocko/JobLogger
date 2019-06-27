@@ -37,6 +37,7 @@ namespace JobLogger.BF
                     db.CheckIns.Add(item);
                     db.SaveChanges();
 
+                    MarkNotIsNew(item);
                     return item;
                 }
                 catch (Exception ex)
@@ -105,6 +106,11 @@ namespace JobLogger.BF
             {
                 throw ex;
             }
+        }
+
+        internal static void MarkNotIsNew(CheckIn item)
+        {
+            item.IsNew = false;
         }
     }
 }

@@ -25,6 +25,7 @@ namespace JobLogger.BF
                     db.Tasks.Add(item);
                     db.SaveChanges();
 
+                    MarkNotIsNew(item);
                     return item;
                 }
                 catch (Exception ex)
@@ -146,6 +147,18 @@ namespace JobLogger.BF
             }
 
             return fetched;
+        }
+
+        internal static void MarkNotIsNew(Task item)
+        {
+            item.IsNew = false;
+            if (item.Logs != null)
+            {
+                foreach (var log in item.Logs)
+                {
+                    TaskLogBF.MarkNotIsNew(log);
+                }
+            }
         }
     }
 }
