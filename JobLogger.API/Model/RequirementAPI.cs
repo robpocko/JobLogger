@@ -6,13 +6,14 @@ namespace JobLogger.API.Model
 {
     public class RequirementAPI : APIBase
     {
-        public string Title { get; set; }
-        public RequirementStatus Status { get; set; }
-        public long? FeatureID { get; set; }
-        public FeatureAPI Feature { get; set; }
-        public virtual ICollection<TaskAPI> Tasks { get; set; }
+        public string                               Title { get; set; }
+        public RequirementStatus                    Status { get; set; }
+        public long?                                FeatureID { get; set; }
+        public FeatureAPI                           Feature { get; set; }
+        public ICollection<TaskAPI>                 Tasks { get; set; }
+        public ICollection<RequirementCommentAPI>   Comments { get; set; }
 
-        public static Requirement To(RequirementAPI item, bool includeTasks = true)
+        public static Requirement To(RequirementAPI item, bool includeTasks = true, bool includeComments = true)
         {
             if (item != null)
             {
@@ -22,6 +23,7 @@ namespace JobLogger.API.Model
                     Title = item.Title,
                     Status = item.Status,
                     Tasks = includeTasks ? TaskAPI.To(item.Tasks) : null,
+                    Comments = includeComments ? RequirementCommentAPI.To(item.Comments) : null,
                     FeatureID = item.FeatureID,
                     Feature = FeatureAPI.To(item.Feature),
                     IsNew = item.IsNew
@@ -33,7 +35,7 @@ namespace JobLogger.API.Model
             }
         }
 
-        public static RequirementAPI From(Requirement item, bool includeTasks = true)
+        public static RequirementAPI From(Requirement item, bool includeTasks = true, bool includeComments = true)
         {
             if (item != null)
             {
@@ -43,6 +45,7 @@ namespace JobLogger.API.Model
                     Title = item.Title,
                     Status = item.Status,
                     Tasks = includeTasks ? TaskAPI.From(item.Tasks) : null,
+                    Comments = includeComments ? RequirementCommentAPI.From(item.Comments) : null,
                     FeatureID = item.FeatureID,
                     Feature = FeatureAPI.From(item.Feature, false),
                     IsNew = item.IsNew

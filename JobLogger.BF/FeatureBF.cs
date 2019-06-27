@@ -68,7 +68,10 @@ namespace JobLogger.BF
             {
                 return db.Features
                             .Where(i => i.ID == id)
-                            .Include(r => r.Requirements)
+                            .Include(feat => feat.Requirements).ThenInclude(req => req.Comments)
+                            .Include(feat => feat.Requirements).ThenInclude(req => req.Tasks).ThenInclude(task => task.Comments)
+                            .Include(feat => feat.Requirements).ThenInclude(req => req.Tasks).ThenInclude(task => task.CheckIns)
+                            .Include(feat => feat.Requirements).ThenInclude(req => req.Tasks).ThenInclude(task => task.Logs).ThenInclude(log => log.Comments)
                             .Single();
             }
             catch (Exception ex)

@@ -6,13 +6,14 @@ namespace JobLogger.API.Model
 {
     public class TaskLogAPI : APIBase
     {
-        public DateTime LogDate { get; set; }
-        public TimeSpan StartTime { get; set; }
-        public TimeSpan? EndTime { get; set; }
-        public string Description { get; set; }
-        public long? TaskID { get; set; }
-        public TaskAPI Task { get; set; }
-        public ICollection<CheckInAPI> CheckIns { get; set; }
+        public DateTime                         LogDate { get; set; }
+        public TimeSpan                         StartTime { get; set; }
+        public TimeSpan?                        EndTime { get; set; }
+        public string                           Description { get; set; }
+        public long?                            TaskID { get; set; }
+        public TaskAPI                          Task { get; set; }
+        public ICollection<CheckInAPI>          CheckIns { get; set; }
+        public ICollection<TaskLogCommentAPI>   Comments { get; set; }
 
         public static TaskLog To(TaskLogAPI item)
         {
@@ -25,11 +26,12 @@ namespace JobLogger.API.Model
                 Description = item.Description,
                 TaskID = item.TaskID,
                 Task = TaskAPI.To(item.Task, false),
-                CheckIns = CheckInAPI.To(item.CheckIns)
+                CheckIns = CheckInAPI.To(item.CheckIns),
+                Comments = TaskLogCommentAPI.To(item.Comments)
             };
         }
 
-        public static TaskLogAPI From(TaskLog item, bool loadCheckins = false)
+        public static TaskLogAPI From(TaskLog item, bool loadCheckins = false, bool loadComments = false)
         {
             return new TaskLogAPI
             {
@@ -40,7 +42,8 @@ namespace JobLogger.API.Model
                 Description = item.Description,
                 TaskID = item.TaskID,
                 Task = TaskAPI.From(item.Task, false),
-                CheckIns = loadCheckins ? CheckInAPI.From(item.CheckIns) : null
+                CheckIns = loadCheckins ? CheckInAPI.From(item.CheckIns) : null,
+                Comments = loadComments ? TaskLogCommentAPI.From(item.Comments) : null
             };
         }
 

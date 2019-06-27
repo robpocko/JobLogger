@@ -6,14 +6,14 @@ namespace JobLogger.API.Model
 {
     public class TaskAPI : APIBase
     {
-        public string Title { get; set; }
-        public TaskType TaskType { get; set; }
-        public bool IsActive { get; set; }
-        public long? RequirementID { get; set; }
-        public RequirementAPI Requirement { get; set; }
-        public ICollection<TaskCheckInAPI> CheckIns { get; set; }
-        public ICollection<TaskLogAPI> Logs { get; set; }
-        public ICollection<TaskCommentAPI> Comments { get; set; }
+        public string                       Title { get; set; }
+        public TaskType                     TaskType { get; set; }
+        public bool                         IsActive { get; set; }
+        public long?                        RequirementID { get; set; }
+        public RequirementAPI               Requirement { get; set; }
+        public ICollection<TaskCheckInAPI>  CheckIns { get; set; }
+        public ICollection<TaskLogAPI>      Logs { get; set; }
+        public ICollection<TaskCommentAPI>  Comments { get; set; }
 
 
         public static Task To(TaskAPI item, bool includeTaskLogs = true, bool includeComments = true)
