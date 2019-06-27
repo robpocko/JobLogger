@@ -7,28 +7,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Tests
+namespace JobLogger.UnitTests
 {
     public class Tests
     {
-        private static bool setupHasBeenRun = false;
+        //private static bool setupHasBeenRun = false;
 
         [SetUp]
         public void Setup()
         {
-            if (!setupHasBeenRun)
+            if (!GlobalCommon.dataHasBeenCleared)
             {
-                using (JobLoggerDbContext db = new JobLoggerDbContext())
-                {
-                    db.Database.ExecuteSqlCommand("delete from CodeBranch");
-                    db.Database.ExecuteSqlCommand("delete from TaskLog");
-                    db.Database.ExecuteSqlCommand("delete from Task");
-                    db.Database.ExecuteSqlCommand("delete from Requirement");
-                    db.Database.ExecuteSqlCommand("delete from Feature");
-
-                    new CodeBranchBF(db).Create(new CodeBranch { Name = "Code Branch 1" });
-                }
-                setupHasBeenRun = true;
+                GlobalCommon.ClearData();
             }
         }
 

@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\JobLogger.API\JobLogger.API.csproj" />
     <ProjectReference Include="..\JobLogger.BF\JobLogger.BF.csproj" />
     <ProjectReference Include="..\JobLogger.DAL\JobLogger.DAL.csproj" />
   </ItemGroup>

@@ -25,6 +25,7 @@ namespace JobLogger.BF
                     db.Features.Add(item);
                     db.SaveChanges();
 
+                    item.IsNew = false;
                     return item;
                 }
                 catch (Exception ex)
@@ -120,10 +121,35 @@ namespace JobLogger.BF
         {
             Feature fetched = db.Features
                                 .Where(i => i.ID == item.ID)
+                                .Include(feat => feat.Requirements)
+                                .ThenInclude(req => req.Tasks)
+                                .ThenInclude(task => task.Logs)
+                                .Include(feat => feat.Requirements).ThenInclude(req => req.Comments)
+                                
                                 .Single();
 
             fetched.Title = item.Title;
             fetched.Status = item.Status;
+
+
+
+
+            foreach (var requirement in fetched.Requirements)
+            {
+                //requirement.Title =
+                //comment.Comment = item.Comments.Where(c => c.ID == comment.ID).Single().Comment;
+            }
+
+            foreach (var requirement in item.Requirements)
+            {
+                if (requirement.IsNew)
+                {
+                    requirement.IsNew = false;
+                    fetched.Requirements.Add(requirement);
+                }
+            }
+
+
 
             return fetched;
         }
