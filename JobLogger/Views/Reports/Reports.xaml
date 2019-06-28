@@ -50,8 +50,8 @@
                 <muxc:MenuBar VerticalAlignment="Top">
                     <muxc:MenuBarItem Title="Time Sheets">
                         <MenuFlyoutItem Text="For Today" Click="TimesheetToday_Click"/>
-                        <MenuFlyoutItem Text="For Yesterday"/>
-                        <MenuFlyoutItem Text="For other day"/>
+                        <MenuFlyoutItem Text="For Yesterday" Click="TimesheetYesterday_Click"/>
+                        <MenuFlyoutItem Text="For other day" Click="TimesheetAnyDay_Click"/>
                     </muxc:MenuBarItem>
 
                     <muxc:MenuBarItem Title="Features">
@@ -63,6 +63,15 @@
                     <muxc:MenuBarItem Title="Tasks">
                     </muxc:MenuBarItem>
                 </muxc:MenuBar>
+                <CalendarDatePicker 
+                    x:Name="selectedDate"
+                    DateFormat="{}{day.integer} {month.full} {year.full}"
+                    />
+                <StackPanel 
+                    Orientation="Vertical"
+                    x:Name="ReportContainer"
+                    />
+
             </StackPanel>
         </Grid>
     </Grid>
