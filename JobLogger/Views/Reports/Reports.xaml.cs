@@ -70,7 +70,7 @@ namespace JobLogger.Views.Reports
         {
             ReportContainer.Children.Clear();
 
-
+            int[] widths = new int[] { 100, 100, 80, 300 };
 
             Grid grid = new Grid();
 
@@ -84,14 +84,8 @@ namespace JobLogger.Views.Reports
             for (int i = 0; i < 4; i++)
             {
                 ColumnDefinition col = new ColumnDefinition();
-                if (i < 3)
-                {
-                    col.Width = new GridLength(0, GridUnitType.Auto);
-                }
-                else
-                {
-                    col.Width = new GridLength(1, GridUnitType.Star);
-                }
+                col.Width = new GridLength(widths[i], GridUnitType.Auto);
+                col.MinWidth = widths[i];
 
                 grid.ColumnDefinitions.Add(col);
 
@@ -107,48 +101,20 @@ namespace JobLogger.Views.Reports
                                 "Duration" :
                                 "Comment";
 
-
-                //    TextBlock tbox = new TextBlock { Margin = new Thickness(5, 5, 0, 5), Foreground = new SolidColorBrush(Windows.UI.Colors.White) };
-                //    tbox.Text = "Hello";
                 grid.Children.Add(tblock);
                 Grid.SetColumn(tblock, i);
             }
 
-
-            //ColumnDefinition col1 = new ColumnDefinition();
-            //col1.Width = new GridLength(0, GridUnitType.Auto);
-            //grid.ColumnDefinitions.Add(col1);
-            //CheckBox cbox = new CheckBox();
-            //cbox.MinWidth = 32;
-            //cbox.HorizontalAlignment = HorizontalAlignment.Left;
-            //cbox.Background = new SolidColorBrush(Windows.UI.Colors.Transparent);
-            //grid.Children.Add(cbox);
-            //Grid.SetColumn(cbox, 0);
-
-            //ColumnDefinition col2 = new ColumnDefinition();
-            //col2.Width = new GridLength(0, GridUnitType.Auto);
-            //grid.ColumnDefinitions.Add(col2);
-            //TextBlock tblock = new TextBlock();
-            //tblock.FontSize = 16;
-            //tblock.HorizontalAlignment = HorizontalAlignment.Left;
-            //tblock.VerticalAlignment = VerticalAlignment.Center;
-            //tblock.Text = "text";
-            //grid.Children.Add(tblock);
-            //Grid.SetColumn(tblock, 1);
-
-
-            //ColumnDefinition col3 = new ColumnDefinition();
-            //col3.Width = new GridLength(1, GridUnitType.Star);
-            //grid.ColumnDefinitions.Add(col3);
-            //TextBox tbox = new TextBox();
-            //tbox.FontSize = 16;
-            //tbox.HorizontalAlignment = HorizontalAlignment.Left;
-            //tbox.VerticalAlignment = VerticalAlignment.Center;
-            //grid.Children.Add(tbox);
-            //Grid.SetColumn(tbox, 2);
-
-
             ReportContainer.Children.Add(grid);
+
+            ListView reportBody = new ListView();
+
+        }
+
+        private async void SelectedDate_DateChanged(CalendarDatePicker sender, CalendarDatePickerDateChangedEventArgs args)
+        {
+            List<TimesheetAPI> reportData = await Timesheet.Get(selectedDate.Date.Value.Date);
+            DisplayTimesheet(reportData);
         }
     }
 }

@@ -92,7 +92,7 @@
                     <DataTemplate x:DataType="data:TaskLogsAPI">
                         <Grid Background="White">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="0.5*" ></ColumnDefinition>
+                                <ColumnDefinition Width="0.5*"></ColumnDefinition>
                                 <ColumnDefinition Width="4.5*"></ColumnDefinition>
                                 <ColumnDefinition Width="0.5*" ></ColumnDefinition>
                             </Grid.ColumnDefinitions>
