@@ -87,6 +87,81 @@ namespace JobLogger.UnitTests
                 };
 
                 newFeature = FeatureAPI.From(new FeatureBF(db).Create(FeatureAPI.To(newFeature)));
+                Assert.IsFalse(newFeature.IsNew);
+                Assert.IsFalse(newFeature.Requirements.ElementAt(0).IsNew);
+                Assert.IsFalse(newFeature.Requirements.ElementAt(1).IsNew);
+                Assert.IsFalse(newFeature.Requirements.ElementAt(0).Tasks.ElementAt(0).IsNew);
+
+                FeatureAPI fetched = FeatureAPI.From(new FeatureBF(db).Get(5));
+
+                Assert.AreEqual(newFeature.Title, fetched.Title);
+                Assert.AreEqual(newFeature.Status, fetched.Status);
+                Assert.AreEqual(2, fetched.Requirements.Count);
+                for (int i = 0; i < 2; i++)     //  Requirements
+                {
+                    int j = newFeature.Requirements.ElementAt(i)?.Comments?.Count ?? 0;
+                    if (j > 0)
+                    {
+                        Assert.AreEqual(j, fetched.Requirements.ElementAt(i).Comments.Count);
+                        for (int k = 0; k < j; k++)     //  RequirementComments
+                        {
+                            Assert.AreEqual(newFeature.Requirements.ElementAt(i).Comments.ElementAt(k).Comment,
+                                            fetched.Requirements.ElementAt(i).Comments.ElementAt(k).Comment);
+                        }
+                    }
+                    j = newFeature.Requirements.ElementAt(i)?.Tasks?.Count ?? 0;
+                    if (j > 0)
+                    {
+                        Assert.AreEqual(j, fetched.Requirements.ElementAt(i).Tasks.Count);
+                        for (int k = 0; k < j; k++)     //  Tasks
+                        {
+                            Assert.AreEqual(newFeature.Requirements.ElementAt(i).Tasks.ElementAt(k).IsActive,
+                                            fetched.Requirements.ElementAt(i).Tasks.ElementAt(k).IsActive);
+                            Assert.AreEqual(newFeature.Requirements.ElementAt(i).Tasks.ElementAt(k).TaskType,
+                                            fetched.Requirements.ElementAt(i).Tasks.ElementAt(k).TaskType);
+                            Assert.AreEqual(newFeature.Requirements.ElementAt(i).Tasks.ElementAt(k).Title,
+                                            fetched.Requirements.ElementAt(i).Tasks.ElementAt(k).Title);
+
+                            int l = newFeature.Requirements.ElementAt(i)?.Tasks.ElementAt(k)?.Comments?.Count ?? 0;
+                            if (l > 0)
+                            {
+                                for (int m = 0; m < l; m++)     //  TaskComments
+                                {
+                                    Assert.AreEqual(newFeature.Requirements.ElementAt(i).Tasks.ElementAt(k).Comments.ElementAt(m).Comment,
+                                                    fetched.Requirements.ElementAt(i).Tasks.ElementAt(k).Comments.ElementAt(m).Comment);
+                                }
+                            }
+
+                            l = newFeature.Requirements.ElementAt(i)?.Tasks.ElementAt(k)?.Logs?.Count ?? 0;
+                            if (l > 0)
+                            {
+                                for (int m = 0; m < l; m++)     //  TaskLogs
+                                {
+                                    Assert.AreEqual(newFeature.Requirements.ElementAt(i).Tasks.ElementAt(k).Logs.ElementAt(m).Description,
+                                                    fetched.Requirements.ElementAt(i).Tasks.ElementAt(k).Logs.ElementAt(m).Description);
+                                    Assert.AreEqual(newFeature.Requirements.ElementAt(i).Tasks.ElementAt(k).Logs.ElementAt(m).EndTime,
+                                                    fetched.Requirements.ElementAt(i).Tasks.ElementAt(k).Logs.ElementAt(m).EndTime);
+                                    Assert.AreEqual(newFeature.Requirements.ElementAt(i).Tasks.ElementAt(k).Logs.ElementAt(m).LogDate,
+                                                    fetched.Requirements.ElementAt(i).Tasks.ElementAt(k).Logs.ElementAt(m).LogDate);
+                                    Assert.AreEqual(newFeature.Requirements.ElementAt(i).Tasks.ElementAt(k).Logs.ElementAt(m).StartTime,
+                                                    fetched.Requirements.ElementAt(i).Tasks.ElementAt(k).Logs.ElementAt(m).StartTime);
+
+                                    int n = newFeature.Requirements.ElementAt(i).Tasks.ElementAt(k).Logs.ElementAt(m)?.Comments?.Count ?? 0;
+                                    if (n > 0)
+                                    {
+                                        for (int o = 0; o < n; o++)     //  TaskLogComments
+                                        {
+                                            Assert.AreEqual(newFeature.Requirements.ElementAt(i).Tasks.ElementAt(k).Logs.ElementAt(m).Comments.ElementAt(o).Comment,
+                                                            fetched.Requirements.ElementAt(i).Tasks.ElementAt(k).Logs.ElementAt(m).Comments.ElementAt(o).Comment);
+                                        }
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                }
+
             }
         }
 
