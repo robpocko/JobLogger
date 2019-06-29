@@ -4,11 +4,11 @@ using System.Collections.Generic;
 
 namespace JobLogger.API.Model
 {
-    public class FeatureAPI : APIBase
+    public class FeatureAPI : APITFS
     {
-        public string Title { get; set; }
-        public RequirementStatus Status { get; set; }
-        public virtual ICollection<RequirementAPI> Requirements { get; set; }
+        public string                               Title { get; set; }
+        public RequirementStatus                    Status { get; set; }
+        public virtual ICollection<RequirementAPI>  Requirements { get; set; }
 
         public static Feature To(FeatureAPI item, bool includeRequirements = true)
         {

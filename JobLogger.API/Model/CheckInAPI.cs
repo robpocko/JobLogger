@@ -4,14 +4,14 @@ using System.Collections.Generic;
 
 namespace JobLogger.API.Model
 {
-    public class CheckInAPI : APIBase
+    public class CheckInAPI : APITFS
     {
-        public string Comment { get; set; }
-        public DateTime CheckInTime { get; set; }
-        public long? TaskLogID { get; set; }
-        public TaskLogAPI TaskLog { get; set; }
-        public long CodeBranchID {get; set; }
-        public CodeBranchAPI CodeBranch { get; set; }
+        public string               Comment { get; set; }
+        public DateTime             CheckInTime { get; set; }
+        public long?                TaskLogID { get; set; }
+        public TaskLogAPI           TaskLog { get; set; }
+        public long                 CodeBranchID {get; set; }
+        public CodeBranchAPI        CodeBranch { get; set; }
         ICollection<TaskCheckInAPI> TaskCheckIns { get; set; }
 
         public static CheckIn To(CheckInAPI item)
@@ -25,7 +25,8 @@ namespace JobLogger.API.Model
                 TaskLog = TaskLogAPI.To(item.TaskLog),
                 CodeBranchID = item.CodeBranchID,
                 CodeBranch = item.CodeBranch != null ? CodeBranchAPI.To(item.CodeBranch) : null,
-                TaskCheckIns = TaskCheckInAPI.To(item.TaskCheckIns)
+                TaskCheckIns = TaskCheckInAPI.To(item.TaskCheckIns),
+                IsNew = item.IsNew
             };
         }
 
@@ -40,7 +41,8 @@ namespace JobLogger.API.Model
                 TaskLog = item.TaskLog != null ? TaskLogAPI.From(item.TaskLog) : null,
                 CodeBranchID = item.CodeBranchID,
                 CodeBranch = item.CodeBranch != null ? CodeBranchAPI.From(item.CodeBranch) : null,
-                TaskCheckIns = TaskCheckInAPI.From(item.TaskCheckIns)
+                TaskCheckIns = TaskCheckInAPI.From(item.TaskCheckIns),
+                IsNew = item.IsNew
             };
         }
 

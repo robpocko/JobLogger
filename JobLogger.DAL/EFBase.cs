@@ -34,6 +34,6 @@ namespace JobLogger.DAL
     {
         [Key]
         [Required(ErrorMessage = "ID for record has not been provided")]
-        new public long ID { get; set; }
+        public long ID { get; set; }
     }
 }

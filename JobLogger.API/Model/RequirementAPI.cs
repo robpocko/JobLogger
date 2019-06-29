@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace JobLogger.API.Model
 {
-    public class RequirementAPI : APIBase
+    public class RequirementAPI : APITFS
     {
         public string                               Title { get; set; }
         public RequirementStatus                    Status { get; set; }

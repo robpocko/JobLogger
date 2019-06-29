@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace JobLogger.API.Model
 {
-    public class TaskAPI : APIBase
+    public class TaskAPI : APITFS
     {
         public string                       Title { get; set; }
         public TaskType                     TaskType { get; set; }

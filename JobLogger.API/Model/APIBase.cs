@@ -6,8 +6,7 @@ namespace JobLogger.API.Model
     public abstract class APIBase
     {
         public long ID { get; set; }
-        public bool IsNew { get; set; }
-
+        
         public static EFBase To(APIBase item)
         {
             throw new NotImplementedException("You must override this method in the subclass");
@@ -17,5 +16,10 @@ namespace JobLogger.API.Model
         {
             throw new NotImplementedException("You must override this method in the subclass");
         }
+    }
+
+    public abstract class APITFS : APIBase
+    {
+        public bool IsNew { get; set; }
     }
 }
