@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace JobLogger.DAL
 {
     [Table("CheckIn")]
-    public class CheckIn : EFBase
+    public class CheckIn : EFTFS
     {
         [Required(AllowEmptyStrings = false, ErrorMessage = "You must provide a comment for the check-in")]
         [MaxLength(1000, ErrorMessage = "The check-in comment cannot be longer than 1000 characters")]

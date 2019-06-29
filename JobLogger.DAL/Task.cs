@@ -6,7 +6,7 @@ using JobLogger.DAL.Common;
 namespace JobLogger.DAL
 {
     [Table("Task")]
-    public class Task : EFBase
+    public class Task : EFTFS
     {
         [Required(AllowEmptyStrings = false, ErrorMessage = "You must provide the title for the task")]
         [MaxLength(255, ErrorMessage = "The task title cannot be longer than 255 characters")]

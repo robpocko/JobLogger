@@ -6,7 +6,7 @@ using JobLogger.DAL.Common;
 namespace JobLogger.DAL
 {
     [Table("Feature")]
-    public class Feature : EFBase
+    public class Feature : EFTFS
     {
         [Required(AllowEmptyStrings = false, ErrorMessage = "You must provide the title for the feature")]
         [MaxLength(255, ErrorMessage = "The feature title cannot be longer than 255 characters")]

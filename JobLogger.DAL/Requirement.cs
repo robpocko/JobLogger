@@ -6,7 +6,7 @@ using JobLogger.DAL.Common;
 namespace JobLogger.DAL
 {
     [Table("Requirement")]
-    public class Requirement : EFBase
+    public class Requirement : EFTFS
     {
         [Required(AllowEmptyStrings = false, ErrorMessage = "You must provide the title for the requirement")]
         [MaxLength(255, ErrorMessage = "The requirement title cannot be longer than 255 characters")]

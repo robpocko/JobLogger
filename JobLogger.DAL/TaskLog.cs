@@ -6,12 +6,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace JobLogger.DAL
 {
     [Table("TaskLog")]
-    public class TaskLog : EFBase
+    public class TaskLog : EFJobLogger
     {
-        [Key]
-        [Required(ErrorMessage = "ID for record has not been provided")]
-        new public long ID { get; set; }
-
         [Required(ErrorMessage = "You must provide the date for the log entry")]
         [Display(Name = "Log Date")]
         [Column(TypeName = "Date")]
