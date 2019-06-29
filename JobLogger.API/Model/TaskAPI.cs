@@ -1,19 +1,20 @@
 ﻿using JobLogger.DAL;
 using JobLogger.DAL.Common;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace JobLogger.API.Model
 {
     public class TaskAPI : APITFS
     {
-        public string                       Title { get; set; }
-        public TaskType                     TaskType { get; set; }
-        public bool                         IsActive { get; set; }
-        public long?                        RequirementID { get; set; }
-        public RequirementAPI               Requirement { get; set; }
-        public ICollection<TaskCheckInAPI>  CheckIns { get; set; }
-        public ICollection<TaskLogAPI>      Logs { get; set; }
-        public ICollection<TaskCommentAPI>  Comments { get; set; }
+        public string                   Title { get; set; }
+        public TaskType                 TaskType { get; set; }
+        public bool                     IsActive { get; set; }
+        public long?                    RequirementID { get; set; }
+        public RequirementAPI           Requirement { get; set; }
+        public List<TaskCheckInAPI>     CheckIns { get; set; }
+        public List<TaskLogAPI>         Logs { get; set; }
+        public List<TaskCommentAPI>     Comments { get; set; }
 
 
         public static Task To(TaskAPI item, bool includeTaskLogs = true, bool includeComments = true)
@@ -55,9 +56,9 @@ namespace JobLogger.API.Model
                     Title = item.Title,
                     TaskType = item.TaskType,
                     IsActive = item.IsActive,
-                    CheckIns = TaskCheckInAPI.From(item.CheckIns),
-                    Logs = includeTaskLogs ? TaskLogAPI.From(item.Logs) : null,
-                    Comments = includeComments ? TaskCommentAPI.From(item.Comments) : null,
+                    CheckIns = item.CheckIns != null ? TaskCheckInAPI.From(item.CheckIns).ToList() : null,
+                    Logs = includeTaskLogs && item.Logs != null ? TaskLogAPI.From(item.Logs).ToList() : null,
+                    Comments = includeComments && item.Comments != null ? TaskCommentAPI.From(item.Comments).ToList() : null,
                     RequirementID = item.RequirementID,
                     Requirement = RequirementAPI.From(item.Requirement, false),
                     IsNew = item.IsNew

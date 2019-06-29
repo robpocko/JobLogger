@@ -1,6 +1,7 @@
 ﻿using JobLogger.DAL;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace JobLogger.API.Model
 {
@@ -12,7 +13,7 @@ namespace JobLogger.API.Model
         public TaskLogAPI           TaskLog { get; set; }
         public long                 CodeBranchID {get; set; }
         public CodeBranchAPI        CodeBranch { get; set; }
-        ICollection<TaskCheckInAPI> TaskCheckIns { get; set; }
+        public List<TaskCheckInAPI> TaskCheckIns { get; set; }
 
         public static CheckIn To(CheckInAPI item)
         {
@@ -41,7 +42,7 @@ namespace JobLogger.API.Model
                 TaskLog = item.TaskLog != null ? TaskLogAPI.From(item.TaskLog) : null,
                 CodeBranchID = item.CodeBranchID,
                 CodeBranch = item.CodeBranch != null ? CodeBranchAPI.From(item.CodeBranch) : null,
-                TaskCheckIns = TaskCheckInAPI.From(item.TaskCheckIns),
+                TaskCheckIns = TaskCheckInAPI.From(item.TaskCheckIns).ToList(),
                 IsNew = item.IsNew
             };
         }

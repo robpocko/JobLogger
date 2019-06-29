@@ -1,17 +1,18 @@
 ﻿using JobLogger.DAL;
 using JobLogger.DAL.Common;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace JobLogger.API.Model
 {
     public class RequirementAPI : APITFS
     {
-        public string                               Title { get; set; }
-        public RequirementStatus                    Status { get; set; }
-        public long?                                FeatureID { get; set; }
-        public FeatureAPI                           Feature { get; set; }
-        public ICollection<TaskAPI>                 Tasks { get; set; }
-        public ICollection<RequirementCommentAPI>   Comments { get; set; }
+        public string                       Title { get; set; }
+        public RequirementStatus            Status { get; set; }
+        public long?                        FeatureID { get; set; }
+        public FeatureAPI                   Feature { get; set; }
+        public List<TaskAPI>                Tasks { get; set; }
+        public List<RequirementCommentAPI>  Comments { get; set; }
 
         public static Requirement To(RequirementAPI item, bool includeTasks = true, bool includeComments = true)
         {
@@ -44,8 +45,8 @@ namespace JobLogger.API.Model
                     ID = item.ID,
                     Title = item.Title,
                     Status = item.Status,
-                    Tasks = includeTasks ? TaskAPI.From(item.Tasks) : null,
-                    Comments = includeComments ? RequirementCommentAPI.From(item.Comments) : null,
+                    Tasks = includeTasks && item.Tasks != null ? TaskAPI.From(item.Tasks).ToList() : null,
+                    Comments = includeComments && item.Comments != null ? RequirementCommentAPI.From(item.Comments).ToList() : null,
                     FeatureID = item.FeatureID,
                     Feature = FeatureAPI.From(item.Feature, false),
                     IsNew = item.IsNew

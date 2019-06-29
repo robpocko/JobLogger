@@ -1,19 +1,20 @@
 ﻿using JobLogger.DAL;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace JobLogger.API.Model
 {
     public class TaskLogAPI : APIBase
     {
-        public DateTime                         LogDate { get; set; }
-        public TimeSpan                         StartTime { get; set; }
-        public TimeSpan?                        EndTime { get; set; }
-        public string                           Description { get; set; }
-        public long?                            TaskID { get; set; }
-        public TaskAPI                          Task { get; set; }
-        public ICollection<CheckInAPI>          CheckIns { get; set; }
-        public ICollection<TaskLogCommentAPI>   Comments { get; set; }
+        public DateTime                 LogDate { get; set; }
+        public TimeSpan                 StartTime { get; set; }
+        public TimeSpan?                EndTime { get; set; }
+        public string                   Description { get; set; }
+        public long?                    TaskID { get; set; }
+        public TaskAPI                  Task { get; set; }
+        public List<CheckInAPI>         CheckIns { get; set; }
+        public List<TaskLogCommentAPI>  Comments { get; set; }
 
         public static TaskLog To(TaskLogAPI item)
         {
@@ -42,8 +43,8 @@ namespace JobLogger.API.Model
                 Description = item.Description,
                 TaskID = item.TaskID,
                 Task = TaskAPI.From(item.Task, false),
-                CheckIns = loadCheckins ? CheckInAPI.From(item.CheckIns) : null,
-                Comments = loadComments ? TaskLogCommentAPI.From(item.Comments) : null
+                CheckIns = loadCheckins && item.CheckIns != null ? CheckInAPI.From(item.CheckIns).ToList() : null,
+                Comments = loadComments && item.Comments != null ? TaskLogCommentAPI.From(item.Comments).ToList() : null
             };
         }
 

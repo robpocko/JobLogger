@@ -5,7 +5,6 @@ using JobLogger.DAL.Common;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace JobLogger.UnitTests
 {
@@ -88,9 +87,9 @@ namespace JobLogger.UnitTests
 
                 newFeature = FeatureAPI.From(new FeatureBF(db).Create(FeatureAPI.To(newFeature)));
                 Assert.IsFalse(newFeature.IsNew);
-                Assert.IsFalse(newFeature.Requirements.ElementAt(0).IsNew);
-                Assert.IsFalse(newFeature.Requirements.ElementAt(1).IsNew);
-                Assert.IsFalse(newFeature.Requirements.ElementAt(0).Tasks.ElementAt(0).IsNew);
+                Assert.IsFalse(newFeature.Requirements[0].IsNew);
+                Assert.IsFalse(newFeature.Requirements[1].IsNew);
+                Assert.IsFalse(newFeature.Requirements[0].Tasks[0].IsNew);
 
                 FeatureAPI fetched = FeatureAPI.From(new FeatureBF(db).Get(5));
 
@@ -99,60 +98,60 @@ namespace JobLogger.UnitTests
                 Assert.AreEqual(2, fetched.Requirements.Count);
                 for (int i = 0; i < 2; i++)     //  Requirements
                 {
-                    int j = newFeature.Requirements.ElementAt(i)?.Comments?.Count ?? 0;
+                    int j = newFeature.Requirements[i]?.Comments?.Count ?? 0;
                     if (j > 0)
                     {
-                        Assert.AreEqual(j, fetched.Requirements.ElementAt(i).Comments.Count);
+                        Assert.AreEqual(j, fetched.Requirements[i].Comments.Count);
                         for (int k = 0; k < j; k++)     //  RequirementComments
                         {
-                            Assert.AreEqual(newFeature.Requirements.ElementAt(i).Comments.ElementAt(k).Comment,
-                                            fetched.Requirements.ElementAt(i).Comments.ElementAt(k).Comment);
+                            Assert.AreEqual(newFeature.Requirements[i].Comments[k].Comment,
+                                            fetched.Requirements[i].Comments[k].Comment);
                         }
                     }
-                    j = newFeature.Requirements.ElementAt(i)?.Tasks?.Count ?? 0;
+                    j = newFeature.Requirements[i]?.Tasks?.Count ?? 0;
                     if (j > 0)
                     {
-                        Assert.AreEqual(j, fetched.Requirements.ElementAt(i).Tasks.Count);
+                        Assert.AreEqual(j, fetched.Requirements[i].Tasks.Count);
                         for (int k = 0; k < j; k++)     //  Tasks
                         {
-                            Assert.AreEqual(newFeature.Requirements.ElementAt(i).Tasks.ElementAt(k).IsActive,
-                                            fetched.Requirements.ElementAt(i).Tasks.ElementAt(k).IsActive);
-                            Assert.AreEqual(newFeature.Requirements.ElementAt(i).Tasks.ElementAt(k).TaskType,
-                                            fetched.Requirements.ElementAt(i).Tasks.ElementAt(k).TaskType);
-                            Assert.AreEqual(newFeature.Requirements.ElementAt(i).Tasks.ElementAt(k).Title,
-                                            fetched.Requirements.ElementAt(i).Tasks.ElementAt(k).Title);
+                            Assert.AreEqual(newFeature.Requirements[i].Tasks[k].IsActive,
+                                            fetched.Requirements[i].Tasks[k].IsActive);
+                            Assert.AreEqual(newFeature.Requirements[i].Tasks[k].TaskType,
+                                            fetched.Requirements[i].Tasks[k].TaskType);
+                            Assert.AreEqual(newFeature.Requirements[i].Tasks[k].Title,
+                                            fetched.Requirements[i].Tasks[k].Title);
 
-                            int l = newFeature.Requirements.ElementAt(i)?.Tasks.ElementAt(k)?.Comments?.Count ?? 0;
+                            int l = newFeature.Requirements[i]?.Tasks[k]?.Comments?.Count ?? 0;
                             if (l > 0)
                             {
                                 for (int m = 0; m < l; m++)     //  TaskComments
                                 {
-                                    Assert.AreEqual(newFeature.Requirements.ElementAt(i).Tasks.ElementAt(k).Comments.ElementAt(m).Comment,
-                                                    fetched.Requirements.ElementAt(i).Tasks.ElementAt(k).Comments.ElementAt(m).Comment);
+                                    Assert.AreEqual(newFeature.Requirements[i].Tasks[k].Comments[m].Comment,
+                                                    fetched.Requirements[i].Tasks[k].Comments[m].Comment);
                                 }
                             }
 
-                            l = newFeature.Requirements.ElementAt(i)?.Tasks.ElementAt(k)?.Logs?.Count ?? 0;
+                            l = newFeature.Requirements[i]?.Tasks[k]?.Logs?.Count ?? 0;
                             if (l > 0)
                             {
                                 for (int m = 0; m < l; m++)     //  TaskLogs
                                 {
-                                    Assert.AreEqual(newFeature.Requirements.ElementAt(i).Tasks.ElementAt(k).Logs.ElementAt(m).Description,
-                                                    fetched.Requirements.ElementAt(i).Tasks.ElementAt(k).Logs.ElementAt(m).Description);
-                                    Assert.AreEqual(newFeature.Requirements.ElementAt(i).Tasks.ElementAt(k).Logs.ElementAt(m).EndTime,
-                                                    fetched.Requirements.ElementAt(i).Tasks.ElementAt(k).Logs.ElementAt(m).EndTime);
-                                    Assert.AreEqual(newFeature.Requirements.ElementAt(i).Tasks.ElementAt(k).Logs.ElementAt(m).LogDate,
-                                                    fetched.Requirements.ElementAt(i).Tasks.ElementAt(k).Logs.ElementAt(m).LogDate);
-                                    Assert.AreEqual(newFeature.Requirements.ElementAt(i).Tasks.ElementAt(k).Logs.ElementAt(m).StartTime,
-                                                    fetched.Requirements.ElementAt(i).Tasks.ElementAt(k).Logs.ElementAt(m).StartTime);
+                                    Assert.AreEqual(newFeature.Requirements[i].Tasks[k].Logs[m].Description,
+                                                    fetched.Requirements[i].Tasks[k].Logs[m].Description);
+                                    Assert.AreEqual(newFeature.Requirements[i].Tasks[k].Logs[m].EndTime,
+                                                    fetched.Requirements[i].Tasks[k].Logs[m].EndTime);
+                                    Assert.AreEqual(newFeature.Requirements[i].Tasks[k].Logs[m].LogDate,
+                                                    fetched.Requirements[i].Tasks[k].Logs[m].LogDate);
+                                    Assert.AreEqual(newFeature.Requirements[i].Tasks[k].Logs[m].StartTime,
+                                                    fetched.Requirements[i].Tasks[k].Logs[m].StartTime);
 
-                                    int n = newFeature.Requirements.ElementAt(i).Tasks.ElementAt(k).Logs.ElementAt(m)?.Comments?.Count ?? 0;
+                                    int n = newFeature.Requirements[i].Tasks[k].Logs[m]?.Comments?.Count ?? 0;
                                     if (n > 0)
                                     {
                                         for (int o = 0; o < n; o++)     //  TaskLogComments
                                         {
-                                            Assert.AreEqual(newFeature.Requirements.ElementAt(i).Tasks.ElementAt(k).Logs.ElementAt(m).Comments.ElementAt(o).Comment,
-                                                            fetched.Requirements.ElementAt(i).Tasks.ElementAt(k).Logs.ElementAt(m).Comments.ElementAt(o).Comment);
+                                            Assert.AreEqual(newFeature.Requirements[i].Tasks[k].Logs[m].Comments[o].Comment,
+                                                            fetched.Requirements[i].Tasks[k].Logs[m].Comments[o].Comment);
                                         }
                                     }
 
@@ -201,7 +200,7 @@ namespace JobLogger.UnitTests
 
                 newFeature = FeatureAPI.From(new FeatureBF(db).Update(FeatureAPI.To(newFeature)));
                 Assert.AreEqual(1, newFeature.Requirements.Count);
-                Assert.IsFalse(newFeature.Requirements.ElementAt(0).IsNew);
+                Assert.IsFalse(newFeature.Requirements[0].IsNew);
             }
         }
     }

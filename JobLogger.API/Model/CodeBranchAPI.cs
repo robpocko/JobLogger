@@ -1,14 +1,13 @@
-﻿using System;
+﻿using JobLogger.DAL;
 using System.Collections.Generic;
-using System.Text;
-using JobLogger.DAL;
+using System.Linq;
 
 namespace JobLogger.API.Model
 {
     public class CodeBranchAPI : APIBase
     {
-        public string Name { get; set; }
-        public ICollection<CheckInAPI> BranchCheckIns { get; set; }
+        public string           Name { get; set; }
+        public List<CheckInAPI> BranchCheckIns { get; set; }
 
         public static CodeBranch To(CodeBranchAPI item)
         {
@@ -26,7 +25,7 @@ namespace JobLogger.API.Model
             {
                 ID = item.ID,
                 Name = item.Name,
-                BranchCheckIns = CheckInAPI.From(item.BranchCheckIns)
+                BranchCheckIns = CheckInAPI.From(item.BranchCheckIns).ToList()
             };
         }
 
