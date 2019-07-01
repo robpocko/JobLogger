@@ -98,6 +98,7 @@
                                 <ToolTip 
                                 x:Name="CommentsToolTip" 
                                 Content="{x:Bind appSystem:JLHelpers.ShowCommentToolTip(requirement.comments.Count, 'requirement')}" 
+                                    IsEnabled="{x:Bind appSystem:JLHelpers.EnableShowCommentsButton<RequiremntCommentAPI>(requirement.comments)}"
                                 />
                             </ToolTipService.ToolTip>
                         </Button>
