@@ -90,6 +90,7 @@
                         Content="Show Comments"
                         Margin="20,0,0,0"
                         Click="ShowCommentsButton_Click"
+                        IsEnabled="{x:Bind appSystem:JLHelpers.EnableShowTaskCommentsButton(task.comments)}"
                         >
                         <ToolTipService.ToolTip>
                             <ToolTip 

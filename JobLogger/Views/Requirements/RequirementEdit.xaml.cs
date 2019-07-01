@@ -1,6 +1,7 @@
 ﻿using JobLogger.AppSystem;
 using JobLogger.AppSystem.DataAccess;
 using System;
+using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -108,6 +109,30 @@ namespace JobLogger.Views.Requirements
                 typeof(Tasks.TaskEdit),
                 task,
                 new Windows.UI.Xaml.Media.Animation.DrillInNavigationTransitionInfo());
+        }
+
+        private void ViewCommentButton_Click(object sender, RoutedEventArgs e)
+        {
+            ((Frame)Parent).Navigate(
+                typeof(CommentsViewer),
+                requirement.comments,
+                new Windows.UI.Xaml.Media.Animation.DrillInNavigationTransitionInfo());
+        }
+
+        private async void AddCommentButton_Click(object sender, RoutedEventArgs e)
+        {
+            CommentDialog commentDialog = new CommentDialog();
+            var dialogResult = await commentDialog.ShowAsync();
+
+            if (dialogResult == ContentDialogResult.Primary)
+            {
+                string text;
+                commentDialog.Comment.GetText(Windows.UI.Text.TextGetOptions.FormatRtf, out text);
+
+                if (requirement.comments == null) requirement.comments = new List<RequirementCommentAPI>();
+
+                requirement.comments.Add(new RequirementCommentAPI { comment = text });
+            }
         }
     }
 }

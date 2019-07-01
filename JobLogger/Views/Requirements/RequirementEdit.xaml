@@ -88,17 +88,19 @@
                             x:Name="AddCommentButton"
                             Content="Add Comment"
                             IsEnabled="{x:Bind requirement.isNotNew}"
+                            Click="AddCommentButton_Click"
                             Margin="0,0,20,0"
                             />
                         <Button
                             x:Name="ViewCommentButton"
                             Content="View Comments"
+                            IsEnabled="{x:Bind appSystem:JLHelpers.EnableShowRequirementCommentsButton(requirement.comments)}"
+                            Click="ViewCommentButton_Click"
                             >
                             <ToolTipService.ToolTip>
                                 <ToolTip 
                                 x:Name="CommentsToolTip" 
                                 Content="{x:Bind appSystem:JLHelpers.ShowCommentToolTip(requirement.comments.Count, 'requirement')}" 
-                                    IsEnabled="{x:Bind appSystem:JLHelpers.EnableShowCommentsButton<RequiremntCommentAPI>(requirement.comments)}"
                                 />
                             </ToolTipService.ToolTip>
                         </Button>
@@ -121,12 +123,12 @@
                     </Grid>
 
                     <ListView 
-				    Grid.Row="2"
-				    x:Name="taskList" 
-				    IsSynchronizedWithCurrentItem="False"
-				    ScrollViewer.VerticalScrollBarVisibility="Visible" 
-                    DoubleTapped="TaskList_DoubleTapped" 
-				    >
+				        Grid.Row="2"
+				        x:Name="taskList" 
+				        IsSynchronizedWithCurrentItem="False"
+				        ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                        DoubleTapped="TaskList_DoubleTapped" 
+				        >
 
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">

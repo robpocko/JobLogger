@@ -110,11 +110,14 @@
                         x:Name="AddCommentButton"
                         Content="Add Comment"
                         IsEnabled="{x:Bind taskLog.IsNotNew}"
+                        Click="AddCommentButton_Click"
                         Margin="0,0,20,0"
                         />
                     <Button
                         x:Name="ViewCommentButton"
                         Content="View Comments"
+                        IsEnabled="{x:Bind appSystem:JLHelpers.EnableShowTaskLogCommentsButton(taskLog.comments)}"
+                        Click="ViewCommentButton_Click"
                         >
                         <ToolTipService.ToolTip>
                             <ToolTip 

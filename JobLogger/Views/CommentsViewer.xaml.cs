@@ -49,6 +49,20 @@ namespace JobLogger.Views
                         comments.Add(comment);
                     }
                 }
+                else if (e.Parameter as List<RequirementCommentAPI> != null)
+                {
+                    foreach (CommentAPI comment in e.Parameter as List<RequirementCommentAPI>)
+                    {
+                        comments.Add(comment);
+                    }
+                }
+                else
+                {
+                    foreach (CommentAPI comment in e.Parameter as List<TaskLogCommentAPI>)
+                    {
+                        comments.Add(comment);
+                    }
+                }
 
                 currentComment = comments[0];
                 currentCommentIndex = 0;

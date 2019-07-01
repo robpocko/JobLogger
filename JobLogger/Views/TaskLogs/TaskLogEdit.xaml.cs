@@ -98,5 +98,29 @@ namespace JobLogger.Views.TaskLogs
                 newCheckIn,
                 new Windows.UI.Xaml.Media.Animation.DrillInNavigationTransitionInfo());
         }
+
+        private void ViewCommentButton_Click(object sender, RoutedEventArgs e)
+        {
+            ((Frame)Parent).Navigate(
+                typeof(CommentsViewer),
+                taskLog.comments,
+                new Windows.UI.Xaml.Media.Animation.DrillInNavigationTransitionInfo());
+        }
+
+        private async void AddCommentButton_Click(object sender, RoutedEventArgs e)
+        {
+            CommentDialog commentDialog = new CommentDialog();
+            var dialogResult = await commentDialog.ShowAsync();
+
+            if (dialogResult == ContentDialogResult.Primary)
+            {
+                string text;
+                commentDialog.Comment.GetText(Windows.UI.Text.TextGetOptions.FormatRtf, out text);
+
+                if (taskLog.comments == null) taskLog.comments = new List<TaskLogCommentAPI>();
+
+                taskLog.comments.Add(new TaskLogCommentAPI { comment = text });
+            }
+        }
     }
 }
