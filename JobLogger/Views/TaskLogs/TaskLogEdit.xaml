@@ -107,9 +107,22 @@
                         IsEnabled="{x:Bind taskLog.IsNotNew}"
                         />
                     <Button
+                        x:Name="AddCommentButton"
                         Content="Add Comment"
                         IsEnabled="{x:Bind taskLog.IsNotNew}"
+                        Margin="0,0,20,0"
                         />
+                    <Button
+                        x:Name="ViewCommentButton"
+                        Content="View Comments"
+                        >
+                        <ToolTipService.ToolTip>
+                            <ToolTip 
+                                x:Name="CommentsToolTip" 
+                                Content="{x:Bind appSystem:JLHelpers.ShowCommentToolTip(taskLog.comments.Count, 'taskLog')}" 
+                                />
+                        </ToolTipService.ToolTip>
+                    </Button>
                 </StackPanel>
                 <Button
                     x:Name="SaveButton" 

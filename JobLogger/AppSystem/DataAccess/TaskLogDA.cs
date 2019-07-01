@@ -33,6 +33,8 @@ namespace JobLogger.AppSystem.DataAccess
         [DataMember]
         public TaskAPI task { get; set; }
         [DataMember]
+        internal List<TaskLogCommentAPI> comments { get; set; }
+        [DataMember]
         public virtual ICollection<CheckInAPI> checkIns { get; set; }
 
         public bool IsNotNew { get { return id > 0; } }

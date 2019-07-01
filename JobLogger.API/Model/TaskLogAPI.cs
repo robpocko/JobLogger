@@ -32,7 +32,7 @@ namespace JobLogger.API.Model
             };
         }
 
-        public static TaskLogAPI From(TaskLog item, bool loadCheckins = false, bool loadComments = false)
+        public static TaskLogAPI From(TaskLog item, bool loadCheckins = false, bool loadComments = true)
         {
             return new TaskLogAPI
             {

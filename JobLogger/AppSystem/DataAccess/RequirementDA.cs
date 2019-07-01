@@ -23,6 +23,8 @@ namespace JobLogger.AppSystem.DataAccess
         [DataMember]
         internal FeatureAPI feature { get; set; }
         [DataMember]
+        internal List<RequirementCommentAPI> comments { get; set; }
+        [DataMember]
         internal List<TaskAPI> tasks { get; set; }
         [DataMember]
         internal bool isNew { get; set; }

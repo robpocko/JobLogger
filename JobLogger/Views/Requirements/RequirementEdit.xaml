@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:c="using:JobLogger.Controls"
     xmlns:local="using:JobLogger.Views.Requirements"
+    xmlns:appSystem="using:JobLogger.AppSystem"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:data="using:JobLogger.AppSystem.DataAccess"
@@ -75,13 +76,32 @@
 					    Header="Status" 
 					    HorizontalAlignment="Left"
 					    SelectedItem="{x:Bind requirement.status, Mode=TwoWay}" Margin="0,20,0,0" Width="150"/>
-                    <Button 
-                        x:Name="AddTaskButton"
-                        Content="New Task / Bug"
-                        HorizontalAlignment="Right" Click="AddTaskButton_Click"
-                        IsEnabled="{x:Bind requirement.isNotNew}"
-                        />
-
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+                        <Button 
+                            x:Name="AddTaskButton"
+                            Content="New Task / Bug"
+                            HorizontalAlignment="Right" Click="AddTaskButton_Click"
+                            IsEnabled="{x:Bind requirement.isNotNew}"
+                            Margin="0,0,20,0"
+                            />
+                        <Button
+                            x:Name="AddCommentButton"
+                            Content="Add Comment"
+                            IsEnabled="{x:Bind requirement.isNotNew}"
+                            Margin="0,0,20,0"
+                            />
+                        <Button
+                            x:Name="ViewCommentButton"
+                            Content="View Comments"
+                            >
+                            <ToolTipService.ToolTip>
+                                <ToolTip 
+                                x:Name="CommentsToolTip" 
+                                Content="{x:Bind appSystem:JLHelpers.ShowCommentToolTip(requirement.comments.Count, 'requirement')}" 
+                                />
+                            </ToolTipService.ToolTip>
+                        </Button>
+                    </StackPanel>
                     <Grid 
                     Name="GridHeader" 
                     Grid.Row="1" 

@@ -36,4 +36,18 @@ namespace JobLogger.AppSystem.DataAccess
         [DataMember]
         internal TaskAPI task { get; set; }
     }
+
+    [DataContract]
+    internal class RequirementCommentAPI : CommentAPI
+    {
+        [DataMember]
+        internal RequirementAPI requirement { get; set; } 
+    }
+
+    [DataContract]
+    internal class TaskLogCommentAPI : CommentAPI
+    {
+        [DataMember]
+        internal TaskLogAPI taskLog { get; set; }
+    }
 }
