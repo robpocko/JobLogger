@@ -121,18 +121,48 @@ namespace JobLogger.BF
             }
         }
 
-        private TaskLog FetchAndUpdate(TaskLog item)
+        internal TaskLog FetchAndUpdate(TaskLog item)
         {
-            TaskLog fetched = db.TaskLogs
-                                .Where(i => i.ID == item.ID)
-                                .Include(t => t.Task)
-                                .Single();
+            TaskLog fetched = Get(item.ID);
 
             fetched.Description = item.Description;
             fetched.EndTime = item.EndTime;
             fetched.LogDate = item.LogDate;
             fetched.StartTime = item.StartTime;
 
+            if (item.CheckIns != null)
+            {
+                CheckInBF bf = new CheckInBF(db);
+                foreach (var checkIn in item.CheckIns)
+                {
+                    if (checkIn.IsNew)
+                    {
+                        fetched.CheckIns.Add(checkIn);
+                    }
+                    else
+                    {
+                        var temp = fetched.CheckIns.Where(l => l.ID == checkIn.ID).Single();
+                        temp = bf.FetchAndUpdate(checkIn);
+                    }
+                }
+            }
+
+            if (item.Comments != null)
+            {
+                foreach (var comment in item.Comments)
+                {
+                    if (comment.ID <= 0)
+                    {
+                        fetched.Comments.Add(comment);
+                    }
+                    else
+                    {
+                        fetched.Comments.Where(c => c.ID == comment.ID).Single().Comment = comment.Comment;
+                    }
+                }
+            }
+
+            MarkNotIsNew(fetched);
             return fetched;
         }
 

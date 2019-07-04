@@ -58,7 +58,8 @@ namespace JobLogger.BF
             {
                 return db.CheckIns
                             .Where(i => i.ID == id)
-                            .Include(t => t.TaskLog)
+                            .Include(checkIn => checkIn.TaskLog)
+                            .Include(checkIn => checkIn.TaskCheckIns)
                             .Single();
             }
             catch (Exception ex)
@@ -106,6 +107,19 @@ namespace JobLogger.BF
             {
                 throw ex;
             }
+        }
+
+        internal CheckIn FetchAndUpdate(CheckIn item)
+        {
+            CheckIn fetched = Get(item.ID);
+
+            fetched.CheckInTime = item.CheckInTime;
+            fetched.CodeBranchID = item.CodeBranchID;
+            fetched.Comment = item.Comment;
+            fetched.TaskLogID = item.TaskLogID;
+
+            MarkNotIsNew(fetched);
+            return fetched;
         }
 
         internal static void MarkNotIsNew(CheckIn item)

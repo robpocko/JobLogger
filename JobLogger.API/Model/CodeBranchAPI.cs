@@ -24,8 +24,7 @@ namespace JobLogger.API.Model
             return new CodeBranchAPI
             {
                 ID = item.ID,
-                Name = item.Name,
-                BranchCheckIns = CheckInAPI.From(item.BranchCheckIns).ToList()
+                Name = item.Name
             };
         }
 

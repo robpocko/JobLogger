@@ -72,6 +72,7 @@ namespace JobLogger.BF
                             .Include(feat => feat.Requirements).ThenInclude(req => req.Tasks).ThenInclude(task => task.Comments)
                             .Include(feat => feat.Requirements).ThenInclude(req => req.Tasks).ThenInclude(task => task.CheckIns)
                             .Include(feat => feat.Requirements).ThenInclude(req => req.Tasks).ThenInclude(task => task.Logs).ThenInclude(log => log.Comments)
+                            .Include(feat => feat.Requirements).ThenInclude(req => req.Tasks).ThenInclude(task => task.Logs).ThenInclude(log => log.CheckIns)
                             .Single();
             }
             catch (Exception ex)
@@ -127,26 +128,25 @@ namespace JobLogger.BF
             fetched.Title = item.Title;
             fetched.Status = item.Status;
 
-
-
-
-            foreach (var requirement in fetched.Requirements)
+            if (item.Requirements != null)
             {
-                //requirement.Title =
-                //comment.Comment = item.Comments.Where(c => c.ID == comment.ID).Single().Comment;
-            }
+                RequirementBF bf = new RequirementBF(db);
 
-            foreach (var requirement in item.Requirements)
-            {
-                if (requirement.IsNew)
+                foreach (var requirement in item.Requirements)
                 {
-                    requirement.IsNew = false;
-                    fetched.Requirements.Add(requirement);
+                    if (requirement.IsNew)
+                    {
+                        fetched.Requirements.Add(requirement);
+                    }
+                    else
+                    {
+                        var temp = fetched.Requirements.Where(r => r.ID == requirement.ID).Single();
+                        temp = bf.FetchAndUpdate(requirement);
+                    }
                 }
             }
 
-
-
+            MarkNotIsNew(fetched);
             return fetched;
         }
 

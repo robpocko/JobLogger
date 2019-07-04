@@ -120,15 +120,47 @@ namespace JobLogger.BF
             }
         }
 
-        private Requirement FetchAndUpdate(Requirement item)
+        internal Requirement FetchAndUpdate(Requirement item)
         {
-            Requirement fetched = db.Requirements
-                                .Where(i => i.ID == item.ID)
-                                .Single();
+            Requirement fetched = Get(item.ID);
 
             fetched.Title = item.Title;
             fetched.Status = item.Status;
 
+            if (item.Comments != null)
+            {
+                foreach (var comment in item.Comments)
+                {
+                    if (comment.ID <= 0)
+                    {
+                        fetched.Comments.Add(comment);
+                    }
+                    else
+                    {
+                        fetched.Comments.Where(c => c.ID == comment.ID).Single().Comment = comment.Comment;
+                    }
+                }
+            }
+
+            if (item.Tasks != null)
+            {
+                TaskBF bf = new TaskBF(db);
+
+                foreach (var task in item.Tasks)
+                {
+                    if (task.IsNew)
+                    {
+                        fetched.Tasks.Add(task);
+                    }
+                    else
+                    {
+                        var temp = fetched.Tasks.Where(t => t.ID == task.ID).Single();
+                        temp = bf.FetchAndUpdate(task);
+                    }
+                }
+            }
+
+            MarkNotIsNew(fetched);
             return fetched;
         }
 

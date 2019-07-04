@@ -68,10 +68,10 @@ namespace JobLogger.BF
             {
                 return db.Tasks
                             .Where(i => i.ID == id)
-                            .Include(c => c.CheckIns)
-                            .Include(l => l.Logs)
-                            .Include(r => r.Requirement)
-                            .Include(cc => cc.Comments)
+                            .Include(task => task.CheckIns)
+                            .Include(task => task.Logs).ThenInclude(log => log.Comments)
+                            .Include(task => task.Requirement)
+                            .Include(task => task.Comments)
                             .Single();
             }
             catch (Exception ex)
@@ -121,31 +121,47 @@ namespace JobLogger.BF
             }
         }
 
-        private Task FetchAndUpdate(Task item)
+        internal Task FetchAndUpdate(Task item)
         {
-            Task fetched = db.Tasks
-                                .Where(i => i.ID == item.ID)
-                                .Include(c => c.Comments)
-                                .OrderBy(a => a.Comments.OrderBy(b => b.ID))
-                                .Single();
+            Task fetched = Get(item.ID);
 
             fetched.Title = item.Title;
             fetched.IsActive = item.IsActive;
             fetched.TaskType = item.TaskType;
 
-            foreach (var comment in fetched.Comments)
+            if (item.Comments != null)
             {
-                comment.Comment = item.Comments.Where(c => c.ID == comment.ID).Single().Comment;
-            }
-
-            foreach (var comment in item.Comments)
-            {
-                if (comment.ID <= 0)
+                foreach (var comment in item.Comments)
                 {
-                    fetched.Comments.Add(comment);
+                    if (comment.ID <= 0)
+                    {
+                        fetched.Comments.Add(comment);
+                    }
+                    else
+                    {
+                        fetched.Comments.Where(c => c.ID == comment.ID).Single().Comment = comment.Comment;
+                    }
                 }
             }
 
+            if (item.Logs != null)
+            {
+                TaskLogBF bf = new TaskLogBF(db);
+                foreach (var log in item.Logs)
+                {
+                    if (log.ID <= 0)
+                    {
+                        fetched.Logs.Add(log);
+                    }
+                    else
+                    {
+                        var temp = fetched.Logs.Where(l => l.ID == log.ID).Single();
+                        temp = bf.FetchAndUpdate(log);
+                    }
+                }
+            }
+
+            MarkNotIsNew(fetched);
             return fetched;
         }
 

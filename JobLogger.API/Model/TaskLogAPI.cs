@@ -32,7 +32,7 @@ namespace JobLogger.API.Model
             };
         }
 
-        public static TaskLogAPI From(TaskLog item, bool loadCheckins = false, bool loadComments = true)
+        public static TaskLogAPI From(TaskLog item)
         {
             return new TaskLogAPI
             {
@@ -43,8 +43,8 @@ namespace JobLogger.API.Model
                 Description = item.Description,
                 TaskID = item.TaskID,
                 Task = TaskAPI.From(item.Task, false),
-                CheckIns = loadCheckins && item.CheckIns != null ? CheckInAPI.From(item.CheckIns).ToList() : null,
-                Comments = loadComments && item.Comments != null ? TaskLogCommentAPI.From(item.Comments).ToList() : null
+                CheckIns = item.CheckIns != null ? CheckInAPI.From(item.CheckIns).ToList() : null,
+                Comments = item.Comments != null ? TaskLogCommentAPI.From(item.Comments).ToList() : null
             };
         }
 
