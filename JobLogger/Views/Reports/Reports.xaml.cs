@@ -11,6 +11,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
@@ -32,7 +33,8 @@ namespace JobLogger.Views.Reports
         {
             List<TimesheetAPI> reportData = await Timesheet.Get(DateTime.Now.Date);
             selectedDate.Date = DateTime.Now.Date;
-            DisplayTimesheet(reportData);
+            report.ItemsSource = reportData;
+            //DisplayTimesheet(reportData);
         }
 
         private async void TimesheetYesterday_Click(object sender, RoutedEventArgs e)
@@ -58,12 +60,15 @@ namespace JobLogger.Views.Reports
 
             List<TimesheetAPI> reportData = await Timesheet.Get(reportDate);
             selectedDate.Date = reportDate;
-            DisplayTimesheet(reportData);
+            report.ItemsSource = reportData;
+           // DisplayTimesheet(reportData);
         }
 
         private async void TimesheetAnyDay_Click(object sender, RoutedEventArgs e)
         {
             List<TimesheetAPI> reportData = await Timesheet.Get(DateTime.Now.Date);
+            report.ItemsSource = reportData;
+            //DisplayTimesheet(reportData);
         }
 
         private void DisplayTimesheet(List<TimesheetAPI> reportData)
@@ -95,11 +100,10 @@ namespace JobLogger.Views.Reports
                 tblock.Foreground = new SolidColorBrush(Windows.UI.Colors.White);
                 tblock.Margin = new Thickness(5, 5, 0, 5);
 
-                tblock.Text = i == 0 ?
-                                "Start Time" : i == 1 ?
-                                "End Time" : i == 2 ?
-                                "Duration" :
-                                "Comment";
+                tblock.Text = i == 0 ? "Start Time" : 
+                              i == 1 ? "End Time" : 
+                              i == 2 ? "Duration" :
+                                       "Comment";
 
                 grid.Children.Add(tblock);
                 Grid.SetColumn(tblock, i);
@@ -108,13 +112,24 @@ namespace JobLogger.Views.Reports
             ReportContainer.Children.Add(grid);
 
             ListView reportBody = new ListView();
+            string sXAML = @"
+<DataTemplate xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation"">
+<TextBlock Text=""Test"" />
+<TextBlock Text=""One"" />
+<TextBlock Text=""Two"" />
+<TextBlock Text=""Three"" />
+</DataTemplate>";
+            var itemTemplate = XamlReader.Load(sXAML) as DataTemplate;
+            reportBody.ItemTemplate = itemTemplate;
+            ReportContainer.Children.Add(reportBody);
 
         }
 
         private async void SelectedDate_DateChanged(CalendarDatePicker sender, CalendarDatePickerDateChangedEventArgs args)
         {
             List<TimesheetAPI> reportData = await Timesheet.Get(selectedDate.Date.Value.Date);
-            DisplayTimesheet(reportData);
+            report.ItemsSource = reportData;
+            //DisplayTimesheet(reportData);
         }
     }
 }
