@@ -25,354 +25,99 @@ namespace JobLogger.UnitTests
         {
             using (JobLoggerDbContext db = new JobLoggerDbContext())
             {
-                FeatureAPI newFeature = new FeatureAPI
-                {
-                    ID = 5,
-                    IsNew = true,
-                    Status = RequirementStatus.Active,
-                    Title = "Feature Number 5",
-                    Requirements = new List<RequirementAPI>
-                    {
-                        new RequirementAPI
-                        {
-                            ID = 7,
-                            IsNew = true,
-                            Status = RequirementStatus.Active,
-                            Title = "Requirement Number 7",
-                            Comments = new List<RequirementCommentAPI>
-                            {
-                                new RequirementCommentAPI { Comment = "Comment Number 1" },
-                                new RequirementCommentAPI { Comment = "Comment Number 2" }
-                            },
-                            Tasks = new List<TaskAPI>
-                            {
-                                new TaskAPI
-                                {
-                                    ID = 11,
-                                    IsActive = true,
-                                    IsNew = true,
-                                    TaskType = TaskType.Task,
-                                    Title = "Task Number 11",
-                                    Comments = new List<TaskCommentAPI>
-                                    {
-                                        new TaskCommentAPI { Comment = "Comment Number 1" },
-                                        new TaskCommentAPI { Comment = "Comment Number 2" }
-                                    },
-                                    Logs = new List<TaskLogAPI>
-                                    {
-                                        new TaskLogAPI
-                                        {
-                                            Description = "TaskLog Number 2",
-                                            LogDate = DateTime.Parse("1 Jan 2019"),
-                                            StartTime = TimeSpan.Parse("09:00"),
-                                            EndTime = TimeSpan.Parse("11:00"),
-                                            Comments = new List<TaskLogCommentAPI>
-                                            {
-                                                new TaskLogCommentAPI { Comment = "TaskLog Comment Number 1"},
-                                                new TaskLogCommentAPI { Comment = "TaskLog Comment Number 2"}
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        new RequirementAPI
-                        {
-                            ID = 8,
-                            IsNew = true,
-                            Status = RequirementStatus.Proposed,
-                            Title = "Requirement Number 8",
-                        }
-                    }
-                };
+                FeatureAPI feature = GlobalCommon.NewFeature(5, "Feature Number 5");
+                feature.Requirements.Add(GlobalCommon.NewRequirement(7, "Requirement Number 7"));
+                feature.Requirements[0].Comments.Add(new RequirementCommentAPI { Comment = "Comment Number 1" });
+                feature.Requirements[0].Comments.Add(new RequirementCommentAPI { Comment = "Comment Number 2" });
+                feature.Requirements[0].Tasks.Add(GlobalCommon.NewTask(11, "Task Number 11"));
+                feature.Requirements[0].Tasks[0].Comments.Add(new TaskCommentAPI { Comment = "Comment Number 1" });
+                feature.Requirements[0].Tasks[0].Comments.Add(new TaskCommentAPI { Comment = "Comment Number 2" });
+                feature.Requirements[0].Tasks[0].Logs.Add(GlobalCommon.NewTaskLog(DateTime.Parse("1 Jan 2019 09:00")));
+                feature.Requirements[0].Tasks[0].Logs[0].Comments.Add(new TaskLogCommentAPI { Comment = "TaskLog Comment Number 1" });
+                feature.Requirements[0].Tasks[0].Logs[0].Comments.Add(new TaskLogCommentAPI { Comment = "TaskLog Comment Number 2" });
+                feature.Requirements.Add(GlobalCommon.NewRequirement(8, "Requirement Number 8"));
 
-                newFeature = FeatureAPI.From(new FeatureBF(db).Create(FeatureAPI.To(newFeature)));
-                Assert.IsFalse(newFeature.IsNew);
-                Assert.IsFalse(newFeature.Requirements[0].IsNew);
-                Assert.IsFalse(newFeature.Requirements[1].IsNew);
-                Assert.IsFalse(newFeature.Requirements[0].Tasks[0].IsNew);
+                Assert.IsTrue(feature.IsNew);
+                Assert.IsTrue(feature.Requirements[0].IsNew);
+                Assert.IsTrue(feature.Requirements[1].IsNew);
+                Assert.IsTrue(feature.Requirements[0].Tasks[0].IsNew);
 
-                FeatureAPI fetched = FeatureAPI.From(new FeatureBF(db).Get(5));
+                feature = FeatureAPI.From(new FeatureBF(db).Create(FeatureAPI.To(feature)));
+                Assert.IsFalse(feature.IsNew);
+                Assert.IsFalse(feature.Requirements[0].IsNew);
+                Assert.IsFalse(feature.Requirements[1].IsNew);
+                Assert.IsFalse(feature.Requirements[0].Tasks[0].IsNew);
 
-                Assert.AreEqual(newFeature.Title, fetched.Title);
-                Assert.AreEqual(newFeature.Status, fetched.Status);
-                Assert.AreEqual(2, fetched.Requirements.Count);
-                for (int i = 0; i < 2; i++)     //  Requirements
-                {
-                    int j = newFeature.Requirements[i]?.Comments?.Count ?? 0;
-                    if (j > 0)
-                    {
-                        Assert.AreEqual(j, fetched.Requirements[i].Comments.Count);
-                        for (int k = 0; k < j; k++)     //  RequirementComments
-                        {
-                            Assert.AreEqual(newFeature.Requirements[i].Comments[k].Comment,
-                                            fetched.Requirements[i].Comments[k].Comment);
-                        }
-                    }
-                    j = newFeature.Requirements[i]?.Tasks?.Count ?? 0;
-                    if (j > 0)
-                    {
-                        Assert.AreEqual(j, fetched.Requirements[i].Tasks.Count);
-                        for (int k = 0; k < j; k++)     //  Tasks
-                        {
-                            Assert.AreEqual(newFeature.Requirements[i].Tasks[k].IsActive,
-                                            fetched.Requirements[i].Tasks[k].IsActive);
-                            Assert.AreEqual(newFeature.Requirements[i].Tasks[k].TaskType,
-                                            fetched.Requirements[i].Tasks[k].TaskType);
-                            Assert.AreEqual(newFeature.Requirements[i].Tasks[k].Title,
-                                            fetched.Requirements[i].Tasks[k].Title);
+                FeatureAPI fetchedFeature = FeatureAPI.From(new FeatureBF(db).Get(5));
 
-                            int l = newFeature.Requirements[i]?.Tasks[k]?.Comments?.Count ?? 0;
-                            if (l > 0)
-                            {
-                                for (int m = 0; m < l; m++)     //  TaskComments
-                                {
-                                    Assert.AreEqual(newFeature.Requirements[i].Tasks[k].Comments[m].Comment,
-                                                    fetched.Requirements[i].Tasks[k].Comments[m].Comment);
-                                }
-                            }
-
-                            l = newFeature.Requirements[i]?.Tasks[k]?.Logs?.Count ?? 0;
-                            if (l > 0)
-                            {
-                                for (int m = 0; m < l; m++)     //  TaskLogs
-                                {
-                                    Assert.AreEqual(newFeature.Requirements[i].Tasks[k].Logs[m].Description,
-                                                    fetched.Requirements[i].Tasks[k].Logs[m].Description);
-                                    Assert.AreEqual(newFeature.Requirements[i].Tasks[k].Logs[m].EndTime,
-                                                    fetched.Requirements[i].Tasks[k].Logs[m].EndTime);
-                                    Assert.AreEqual(newFeature.Requirements[i].Tasks[k].Logs[m].LogDate,
-                                                    fetched.Requirements[i].Tasks[k].Logs[m].LogDate);
-                                    Assert.AreEqual(newFeature.Requirements[i].Tasks[k].Logs[m].StartTime,
-                                                    fetched.Requirements[i].Tasks[k].Logs[m].StartTime);
-
-                                    int n = newFeature.Requirements[i].Tasks[k].Logs[m]?.Comments?.Count ?? 0;
-                                    if (n > 0)
-                                    {
-                                        for (int o = 0; o < n; o++)     //  TaskLogComments
-                                        {
-                                            Assert.AreEqual(newFeature.Requirements[i].Tasks[k].Logs[m].Comments[o].Comment,
-                                                            fetched.Requirements[i].Tasks[k].Logs[m].Comments[o].Comment);
-                                        }
-                                    }
-
-                                }
-                            }
-                        }
-                    }
-                }
-
+                CompareFeatureToFetchedFeature(feature, fetchedFeature);
             }
         }
 
         [Test]
         public void FeatureTest2()
         {
-            FeatureAPI newFeature = new FeatureAPI
-            {
-                ID = 6,
-                IsNew = true,
-                Status = RequirementStatus.Active,
-                Title = "Feature Number 6"
-            };
+            FeatureAPI feature = GlobalCommon.NewFeature(6, "Feature Number 6");
 
             using (JobLoggerDbContext db = new JobLoggerDbContext())
             {
-                newFeature = FeatureAPI.From(new FeatureBF(db).Create(FeatureAPI.To(newFeature)));
+                feature = FeatureAPI.From(new FeatureBF(db).Create(FeatureAPI.To(feature)));
+                Assert.IsFalse(feature.IsNew);
 
-                Assert.IsFalse(newFeature.IsNew);
+                feature.Requirements.Add(GlobalCommon.NewRequirement(9, "Requirement Number 9"));
+                feature.Requirements[0].Comments.Add(new RequirementCommentAPI { Comment = "Comment 1 for Requirement 9" });
+                feature.Requirements[0].Comments.Add(new RequirementCommentAPI { Comment = "Comment 2 for Requirement 9" });
+                feature.Requirements[0].Tasks.Add(GlobalCommon.NewTask(12, "Task Number 12"));
+                feature.Requirements[0].Tasks[0].Comments.Add(new TaskCommentAPI { Comment = "Comment 1 for Task 12" });
+                feature.Requirements[0].Tasks[0].Comments.Add(new TaskCommentAPI { Comment = "Comment 2 for Task 12" });
+                feature.Requirements[0].Tasks[0].Logs.Add(GlobalCommon.NewTaskLog(DateTime.Parse("1 Jan 2019 09:00")));
+                feature.Requirements[0].Tasks[0].Logs[0].Comments.Add(new TaskLogCommentAPI { Comment = "Comment 1 for Time Log 1 for Task 12" });
+                feature.Requirements[0].Tasks[0].Logs[0].Comments.Add(new TaskLogCommentAPI { Comment = "Comment 2 for Time Log 1 for Task 12" });
+                feature.Requirements[0].Tasks[0].Logs.Add(GlobalCommon.NewTaskLog(DateTime.Parse("1 Jan 2019 11:30")));
+                feature.Requirements[0].Tasks[0].Logs[1].Comments.Add(new TaskLogCommentAPI { Comment = "Comment 1 for Time Log 2 for Task 12" });
+                feature.Requirements[0].Tasks[0].Logs[1].Comments.Add(new TaskLogCommentAPI { Comment = "Comment 2 for Time Log 2 for Task 12" });
+                feature.Requirements[0].Tasks.Add(GlobalCommon.NewTask(13, "Task Number 13"));
+                feature.Requirements[0].Tasks[1].Comments.Add(new TaskCommentAPI { Comment = "Comment 1 for Task 13" });
+                feature.Requirements[0].Tasks[1].Logs.Add(GlobalCommon.NewTaskLog(DateTime.Parse("1 Jan 2019 14:00")));
+                feature.Requirements[0].Tasks[1].Logs[0].Comments.Add(new TaskLogCommentAPI { Comment = "Comment 1 for Time Log for Task 13" });
+                feature.Requirements[0].Tasks[1].Logs[0].Comments.Add(new TaskLogCommentAPI { Comment = "Comment 2 for Time Log for Task 13" });
+                feature.Requirements[0].Tasks.Add(GlobalCommon.NewTask(14, "Task Number 14"));
+                feature.Requirements[0].Tasks[2].Comments.Add(new TaskCommentAPI { Comment = "Comment 1 for Task 14" });
+                feature.Requirements[0].Tasks[2].Logs.Add(GlobalCommon.NewTaskLog(DateTime.Parse("2 Jan 2019 09:00")));
+                feature.Requirements[0].Tasks[2].Logs[0].Comments.Add(new TaskLogCommentAPI { Comment = "Comment 1 for Time Log for Task 14" });
+                feature.Requirements[0].Tasks[2].Logs[0].Comments.Add(new TaskLogCommentAPI { Comment = "Comment 2 for Time Log for Task 14" });
+                feature.Requirements[0].Tasks[2].Logs.Add(GlobalCommon.NewTaskLog(DateTime.Parse("2 Jan 2019 11:00")));
+                feature.Requirements[0].Tasks[2].Logs[1].Comments.Add(new TaskLogCommentAPI { Comment = "Comment 1 for Time Log 2 for Task 14" });
+                feature.Requirements[0].Tasks[2].Logs[1].Comments.Add(new TaskLogCommentAPI { Comment = "Comment 2 for Time Log 2 for Task 14" });
 
-                newFeature.Requirements = new List<RequirementAPI>
-                {
-                    new RequirementAPI
-                    {
-                        ID = 9,
-                        IsNew = true,
-                        Status = RequirementStatus.Active,
-                        Title = "Requirement Number 9",
-                        FeatureID = 6,
-                        Comments = new List<RequirementCommentAPI>
-                        {
-                            new RequirementCommentAPI { Comment = "Comment 1 for Requirement 9"},
-                            new RequirementCommentAPI { Comment = "Comment 2 for Requirement 9"}
-                        },
-                        Tasks = new List<TaskAPI>
-                        {
-                            new TaskAPI
-                            {
-                                ID = 12,
-                                IsActive = true,
-                                IsNew = true,
-                                TaskType = TaskType.Task,
-                                Title = "Task Number 12",
-                                Comments = new List<TaskCommentAPI>()
-                                {
-                                    new TaskCommentAPI { Comment = "Comment 1 for Task 12" },
-                                    new TaskCommentAPI { Comment = "Comemnt 2 for Task 12" }
-                                },
-                                Logs = new List<TaskLogAPI>
-                                {
-                                    new TaskLogAPI
-                                    {
-                                        LogDate = DateTime.Parse("1 Jan 2019"),
-                                        StartTime = TimeSpan.Parse("09:00"),
-                                        EndTime = TimeSpan.Parse("11:30"),
-                                        Description = "Time Log 1 for Task 12",
-                                        Comments = new List<TaskLogCommentAPI>
-                                        {
-                                            new TaskLogCommentAPI { Comment = "Comment 1 for Time Log 1 for Task 12" },
-                                            new TaskLogCommentAPI { Comment = "Comment 2 for Time Log 1 for Task 12"  }
-                                        }
-                                    },
-                                    new TaskLogAPI
-                                    {
-                                        LogDate = DateTime.Parse("1 Jan 2019"),
-                                        StartTime = TimeSpan.Parse("11:30"),
-                                        EndTime = TimeSpan.Parse("12:30"),
-                                        Description = "Time Log 2 for Task 12",
-                                        Comments = new List<TaskLogCommentAPI>
-                                        {
-                                            new TaskLogCommentAPI { Comment = "Comment 1 for Time Log 2 for Task 12" },
-                                            new TaskLogCommentAPI { Comment = "Comment 2 for Time Log 2 for Task 12"  }
-                                        }
-                                    }
-                                }
+                feature = FeatureAPI.From(new FeatureBF(db).Update(FeatureAPI.To(feature)));
+                CheckObjectCount(feature, 1, 2, 3, 4, 5, 10, 0, 0);
+                Assert.IsFalse(feature.Requirements[0].IsNew);
 
-                            },
-                            new TaskAPI
-                            {
-                                ID = 13,
-                                IsActive = true,
-                                IsNew = true,
-                                TaskType = TaskType.Bug,
-                                Title = "Bug Number 13",
-                                Comments = new List<TaskCommentAPI>()
-                                {
-                                    new TaskCommentAPI { Comment = "Comment 1 for Bug 13" }
-                                },
-                                Logs = new List<TaskLogAPI>
-                                {
-                                    new TaskLogAPI
-                                    {
-                                        LogDate = DateTime.Parse("1 Jan 2019"),
-                                        StartTime = TimeSpan.Parse("09:00"),
-                                        EndTime = TimeSpan.Parse("11:30"),
-                                        Description = "Time Log 1 for Bug 13",
-                                        Comments = new List<TaskLogCommentAPI>
-                                        {
-                                            new TaskLogCommentAPI { Comment = "Comment 1 for Time Log 1 for Bug 13" },
-                                            new TaskLogCommentAPI { Comment = "Comment 2 for Time Log 1 for Bug 13"  }
-                                        }
-                                    }
-                                }
-                            },
-                            new TaskAPI
-                            {
-                                ID = 14,
-                                IsActive = true,
-                                IsNew = true,
-                                TaskType = TaskType.Bug,
-                                Title = "Bug Number 14",
-                                Comments = new List<TaskCommentAPI>()
-                                {
-                                    new TaskCommentAPI { Comment = "Comment 1 for Bug 14" }
-                                },
-                                Logs = new List<TaskLogAPI>
-                                {
-                                    new TaskLogAPI
-                                    {
-                                        LogDate = DateTime.Parse("1 Jan 2019"),
-                                        StartTime = TimeSpan.Parse("09:00"),
-                                        EndTime = TimeSpan.Parse("11:30"),
-                                        Description = "Time Log 1 for Bug 14",
-                                        Comments = new List<TaskLogCommentAPI>
-                                        {
-                                            new TaskLogCommentAPI { Comment = "Comment 1 for Time Log 1 for Bug 14" },
-                                            new TaskLogCommentAPI { Comment = "Comment 2 for Time Log 1 for Bug 14"  }
-                                        }
-                                    },
-                                    new TaskLogAPI
-                                    {
-                                        LogDate = DateTime.Parse("1 Jan 2019"),
-                                        StartTime = TimeSpan.Parse("11:30"),
-                                        EndTime = TimeSpan.Parse("12:30"),
-                                        Description = "Time Log 2 for Bug 14",
-                                        Comments = new List<TaskLogCommentAPI>
-                                        {
-                                            new TaskLogCommentAPI { Comment = "Comment 1 for Time Log 2 for Bug 14" },
-                                            new TaskLogCommentAPI { Comment = "Comment 2 for Time Log 2 for Bug 14"  }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                };
+                feature.Requirements.Add(GlobalCommon.NewRequirement(10, "equirement Number 10"));
+                feature.Requirements[1].Comments.Add(new RequirementCommentAPI { Comment = "Comment for Requirement Number 10" });
+                feature.Requirements[1].Tasks.Add(GlobalCommon.NewTask(15, "Task Number 15"));
+                feature.Requirements[1].Tasks[0].Comments.Add(new TaskCommentAPI { Comment = "Task Comment for Task 15" });
+                feature.Requirements[1].Tasks[0].Logs.Add(GlobalCommon.NewTaskLog(DateTime.Parse("3 Jan 2019 09:00")));
+                feature.Requirements[1].Tasks[0].Logs[0].Comments.Add(new TaskLogCommentAPI { Comment = "Comment 1 for Task 1 for Task Number 15" });
 
-                newFeature = FeatureAPI.From(new FeatureBF(db).Update(FeatureAPI.To(newFeature)));
-                CheckObjectCount(newFeature, 1, 2, 3, 4, 5, 10, 0, 0);
-                Assert.IsFalse(newFeature.Requirements[0].IsNew);
-
-                newFeature.Requirements.Add(
-                    new RequirementAPI
-                    {
-                        ID = 10,
-                        Title = "Requirement Number 10",
-                        Status = RequirementStatus.Active,
-                        IsNew = true,
-                        Comments = new List<RequirementCommentAPI>
-                        {
-                            new RequirementCommentAPI { Comment = "Comment for Requirement Number 10"}
-                        },
-                        Tasks = new List<TaskAPI>
-                        {
-                            new TaskAPI
-                            {
-                                ID = 15,
-                                IsActive = true,
-                                IsNew = true,
-                                TaskType = TaskType.Task,
-                                Title = "Task Number 15",
-                                Comments = new List<TaskCommentAPI>
-                                {
-                                    new TaskCommentAPI { Comment = "Task Comment for Task 15"}
-                                },
-                                Logs = new List<TaskLogAPI>
-                                {
-                                    new TaskLogAPI
-                                    {
-                                        LogDate = DateTime.Parse("1 Jan 2019"),
-                                        StartTime = TimeSpan.Parse("09:00"),
-                                        EndTime = TimeSpan.Parse("12:30"),
-                                        Description = "Task Log 1 for Task 15",
-                                        Comments = new List<TaskLogCommentAPI>
-                                        {
-                                            new TaskLogCommentAPI { Comment = "Comment 1 for Task 1 for Task Number 15"}
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    });
-
-                newFeature = FeatureAPI.From(new FeatureBF(db).Update(FeatureAPI.To(newFeature)));
+                feature = FeatureAPI.From(new FeatureBF(db).Update(FeatureAPI.To(feature)));
 
                 FeatureAPI fetchedFeature = FeatureAPI.From(new FeatureBF(db).Get(6));
-                CheckObjectCount(newFeature, 2, 3, 4, 5, 6, 11, 0, 0);
+                CheckObjectCount(feature, 2, 3, 4, 5, 6, 11, 0, 0);
 
-
-                newFeature.Requirements[0].Comments.Add(new RequirementCommentAPI { Comment = "Comment 3 for Requirement 9" });
-                newFeature.Requirements[0].Title = "Updated Requirement Number 9";
-                newFeature.Requirements[0].Comments[0].Comment = "Updated Comment for Requirement Number 9";
-                newFeature = FeatureAPI.From(new FeatureBF(db).Update(FeatureAPI.To(newFeature)));
+                feature.Requirements[0].Comments.Add(new RequirementCommentAPI { Comment = "Comment 3 for Requirement 9" });
+                feature.Requirements[0].Title = "Updated Requirement Number 9";
+                feature.Requirements[0].Comments[0].Comment = "Updated Comment for Requirement Number 9";
+                feature = FeatureAPI.From(new FeatureBF(db).Update(FeatureAPI.To(feature)));
 
                 fetchedFeature = FeatureAPI.From(new FeatureBF(db).Get(6));
-                CheckObjectCount(newFeature, 2, 4, 4, 5, 6, 11, 0, 0);
+                CheckObjectCount(feature, 2, 4, 4, 5, 6, 11, 0, 0);
                 Assert.AreEqual("Comment 3 for Requirement 9", fetchedFeature.Requirements[0].Comments[2].Comment);
                 Assert.AreEqual("Updated Requirement Number 9", fetchedFeature.Requirements[0].Title);
                 Assert.AreEqual("Updated Comment for Requirement Number 9", fetchedFeature.Requirements[0].Comments[0].Comment);
 
-                newFeature.Requirements[1].Tasks.Add(new TaskAPI
+                feature.Requirements[1].Tasks.Add(new TaskAPI
                 {
                     ID = 16,
                     Title = "Bug Number 16",
@@ -381,18 +126,20 @@ namespace JobLogger.UnitTests
                     IsNew = true
                 });
 
-                newFeature = FeatureAPI.From(new FeatureBF(db).Update(FeatureAPI.To(newFeature)));
+                feature = FeatureAPI.From(new FeatureBF(db).Update(FeatureAPI.To(feature)));
 
                 fetchedFeature = FeatureAPI.From(new FeatureBF(db).Get(6));
-                CheckObjectCount(    newFeature, 2, 4, 5, 5, 6, 11, 0, 0);
+                CheckObjectCount(feature, 2, 4, 5, 5, 6, 11, 0, 0);
                 CheckObjectCount(fetchedFeature, 2, 4, 5, 5, 6, 11, 0, 0);
 
-                newFeature.Requirements[1].Tasks[1].Comments = new List<TaskCommentAPI>
+                feature.Requirements[1].Tasks[1].Comments = new List<TaskCommentAPI>
                 {
                     new TaskCommentAPI { Comment = "Comment 1 for Bug 16" },
                     new TaskCommentAPI { Comment = "Comment 2 for Bug 16" }
                 };
-                newFeature.Requirements[1].Tasks[1].Logs = new List<TaskLogAPI>
+
+
+                feature.Requirements[1].Tasks[1].Logs = new List<TaskLogAPI>
                 {
                     new TaskLogAPI
                     {
@@ -426,17 +173,17 @@ namespace JobLogger.UnitTests
                                 IsNew = true,
                                 TaskCheckIns = new List<TaskCheckInAPI>
                                 {
-                                    new TaskCheckInAPI { TaskID = newFeature.Requirements[1].Tasks[1].ID }
+                                    new TaskCheckInAPI { TaskID = feature.Requirements[1].Tasks[1].ID }
                                 }
                             }
                         }
                     }
                 };
 
-                newFeature = FeatureAPI.From(new FeatureBF(db).Update(FeatureAPI.To(newFeature)));
+                feature = FeatureAPI.From(new FeatureBF(db).Update(FeatureAPI.To(feature)));
 
                 fetchedFeature = FeatureAPI.From(new FeatureBF(db).Get(6));
-                CheckObjectCount(    newFeature, 2, 4, 5, 7, 8, 13, 1, 1);
+                CheckObjectCount(       feature, 2, 4, 5, 7, 8, 13, 1, 1);
                 CheckObjectCount(fetchedFeature, 2, 4, 5, 7, 8, 13, 1, 1);
             }
         }
@@ -552,6 +299,77 @@ namespace JobLogger.UnitTests
             Assert.AreEqual(0, taskLogCheckInCount, "<7> Check In count is incorrect");
             Assert.AreEqual(0, taskCheckinCount, "<8> Checkin count is incorrect");
             
+        }
+
+        private void CompareFeatureToFetchedFeature(FeatureAPI feature, FeatureAPI fetchedFeature)
+        {
+            Assert.AreEqual(feature.Title, fetchedFeature.Title);
+            Assert.AreEqual(feature.Status, fetchedFeature.Status);
+            Assert.AreEqual(2, fetchedFeature.Requirements.Count);
+            for (int i = 0; i < 2; i++)     //  Requirements
+            {
+                int j = feature.Requirements[i]?.Comments?.Count ?? 0;
+                if (j > 0)
+                {
+                    Assert.AreEqual(j, fetchedFeature.Requirements[i].Comments.Count);
+                    for (int k = 0; k < j; k++)     //  RequirementComments
+                    {
+                        Assert.AreEqual(feature.Requirements[i].Comments[k].Comment,
+                                        fetchedFeature.Requirements[i].Comments[k].Comment);
+                    }
+                }
+                j = feature.Requirements[i]?.Tasks?.Count ?? 0;
+                if (j > 0)
+                {
+                    Assert.AreEqual(j, fetchedFeature.Requirements[i].Tasks.Count);
+                    for (int k = 0; k < j; k++)     //  Tasks
+                    {
+                        Assert.AreEqual(feature.Requirements[i].Tasks[k].IsActive,
+                                        fetchedFeature.Requirements[i].Tasks[k].IsActive);
+                        Assert.AreEqual(feature.Requirements[i].Tasks[k].TaskType,
+                                        fetchedFeature.Requirements[i].Tasks[k].TaskType);
+                        Assert.AreEqual(feature.Requirements[i].Tasks[k].Title,
+                                        fetchedFeature.Requirements[i].Tasks[k].Title);
+
+                        int l = feature.Requirements[i]?.Tasks[k]?.Comments?.Count ?? 0;
+                        if (l > 0)
+                        {
+                            for (int m = 0; m < l; m++)     //  TaskComments
+                            {
+                                Assert.AreEqual(feature.Requirements[i].Tasks[k].Comments[m].Comment,
+                                                fetchedFeature.Requirements[i].Tasks[k].Comments[m].Comment);
+                            }
+                        }
+
+                        l = feature.Requirements[i]?.Tasks[k]?.Logs?.Count ?? 0;
+                        if (l > 0)
+                        {
+                            for (int m = 0; m < l; m++)     //  TaskLogs
+                            {
+                                Assert.AreEqual(feature.Requirements[i].Tasks[k].Logs[m].Description,
+                                                fetchedFeature.Requirements[i].Tasks[k].Logs[m].Description);
+                                Assert.AreEqual(feature.Requirements[i].Tasks[k].Logs[m].EndTime,
+                                                fetchedFeature.Requirements[i].Tasks[k].Logs[m].EndTime);
+                                Assert.AreEqual(feature.Requirements[i].Tasks[k].Logs[m].LogDate,
+                                                fetchedFeature.Requirements[i].Tasks[k].Logs[m].LogDate);
+                                Assert.AreEqual(feature.Requirements[i].Tasks[k].Logs[m].StartTime,
+                                                fetchedFeature.Requirements[i].Tasks[k].Logs[m].StartTime);
+
+                                int n = feature.Requirements[i].Tasks[k].Logs[m]?.Comments?.Count ?? 0;
+                                if (n > 0)
+                                {
+                                    for (int o = 0; o < n; o++)     //  TaskLogComments
+                                    {
+                                        Assert.AreEqual(feature.Requirements[i].Tasks[k].Logs[m].Comments[o].Comment,
+                                                        fetchedFeature.Requirements[i].Tasks[k].Logs[m].Comments[o].Comment);
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
