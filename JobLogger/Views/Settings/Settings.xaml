@@ -50,7 +50,19 @@
                     <StackPanel Grid.Row="1" Margin="0,20,24,0" HorizontalAlignment="Left" Width="Auto">
                         <TextBox
                             x:Name="UrlText"
-                            Header="URL" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch" Width="429"
+                            Header="URL" 
+                            HorizontalAlignment="Left" 
+                            Margin="0,0,0,0" 
+                            VerticalAlignment="Top" 
+                            Width="429"
+                            />
+                        <TextBox
+                            x:Name="BackupLocationText"
+                            Header="Backup Location"
+                            HorizontalAlignment="Left"
+                            Margin="0,20,0,0"
+                            VerticalAlignment="Top"
+                            Width="729"
                             />
                         <Button
                             x:Name="SaveUrlButton"

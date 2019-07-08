@@ -7,16 +7,6 @@ namespace JobLogger.AppSystem
         public const string PASSWORD_LOCKER_RESOURCE_NAME = "au.com.robpocklington.app.joblogger";
         internal static ApplicationDataContainer localSettings;
 
-        public static void Save()
-        {
-            //SaveCredentialsToLocker();
-        }
-
-        public static void Load()
-        {
-            //GetCredentialFromLocker();
-        }
-
         public static ApplicationDataContainer GetApplicationDataContainer()
         {
             if (null == localSettings)
@@ -44,6 +34,26 @@ namespace JobLogger.AppSystem
             set
             {
                 GetApplicationDataContainer().Values["ServerUrl"] = value;
+            }
+        }
+
+        public static string BackupLocation
+        {
+            get
+            {
+                string url = (string)GetApplicationDataContainer().Values["BackupLocation"];
+
+                if (string.IsNullOrEmpty(url))
+                {
+                    return string.Empty;
+                }
+
+                return url;
+            }
+
+            set
+            {
+                GetApplicationDataContainer().Values["BackupLocation"] = value;
             }
         }
     }

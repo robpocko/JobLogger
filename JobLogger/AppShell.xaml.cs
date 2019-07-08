@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using JobLogger.Views.Settings;
+using JobLogger.AppSystem;
 
 namespace JobLogger
 {
@@ -394,7 +395,15 @@ namespace JobLogger
 
         private async void BackupToolMenu_Click(object sender, RoutedEventArgs e)
         {
-            await Tools.BackupDatabase();
+            if (AppSettings.BackupLocation == null || AppSettings.BackupLocation.Length == 0)
+            {
+
+            }
+            else
+            {
+                await Tools.BackupDatabase();
+            }
+            
         }
     }
 }
