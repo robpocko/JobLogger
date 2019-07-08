@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using JobLogger.Views.Settings;
 using JobLogger.AppSystem;
+using JobLogger.Views;
 
 namespace JobLogger
 {
@@ -397,6 +398,14 @@ namespace JobLogger
         {
             if (AppSettings.BackupLocation == null || AppSettings.BackupLocation.Length == 0)
             {
+                GenericDialog dialog = new GenericDialog
+                {
+                    Title = "Title here",
+                    Content = "Put something here",
+                    CloseButtonText = "Ok"
+                };
+
+                ContentDialogResult result = await dialog.ShowAsync();
 
             }
             else

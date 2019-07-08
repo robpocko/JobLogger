@@ -178,6 +178,9 @@
     <Compile Include="Views\Features\FeaturesList.xaml.cs">
       <DependentUpon>FeaturesList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\GenericDialog.xaml.cs">
+      <DependentUpon>GenericDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Reports\Reports.xaml.cs">
       <DependentUpon>Reports.xaml</DependentUpon>
     </Compile>
@@ -263,6 +266,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Features\FeaturesList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GenericDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
