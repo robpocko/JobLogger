@@ -1409,7 +1409,9 @@ namespace JobLogger.DbMigrator
                 new TaskLog { LogDate = DateTime.Parse("05-Mar-2019"), StartTime = TimeSpan.Parse("08:40"), EndTime = TimeSpan.Parse("13:02"), Description = "Connect a record to a container : REBUS-600", TaskID = 124390,
                     CheckIns = new List<CheckIn>
                     {
-                        new CheckIn {  ID = 77362, CheckInTime = DateTime.Parse("05-Mar-2019 09:39"), Comment = "fix to prevent config warning", CodeBranchID = db.CodeBranches.Where(c => c.Name == "DevNextNext").First().ID }
+                        new CheckIn {  ID = 77362, CheckInTime = DateTime.Parse("05-Mar-2019 09:39"), Comment = "fix to prevent config warning", CodeBranchID = db.CodeBranches.Where(c => c.Name == "DevNextNext").First().ID,
+                            TaskCheckIns = new List<TaskCheckIn> { new TaskCheckIn {  TaskID = 124390 } }
+                        }
                     } },
                 new TaskLog { LogDate = DateTime.Parse("05-Mar-2019"), StartTime = TimeSpan.Parse("13:32"), EndTime = TimeSpan.Parse("17:55"), Description = "Connect a record to a container : REBUS-600", TaskID = 124390,
                     CheckIns = new List<CheckIn>

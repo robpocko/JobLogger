@@ -41,7 +41,7 @@ namespace JobLogger.API.Model
                 TaskLogID = item.TaskLogID,
                 CodeBranchID = item.CodeBranchID,
                 CodeBranch = item.CodeBranch != null ? CodeBranchAPI.From(item.CodeBranch) : null,
-                TaskCheckIns = TaskCheckInAPI.From(item.TaskCheckIns).ToList(),
+                TaskCheckIns = item.TaskCheckIns != null ? TaskCheckInAPI.From(item.TaskCheckIns).ToList() : null,
                 IsNew = item.IsNew
             };
         }
