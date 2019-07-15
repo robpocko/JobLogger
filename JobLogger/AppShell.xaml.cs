@@ -400,8 +400,10 @@ namespace JobLogger
             {
                 GenericDialog dialog = new GenericDialog
                 {
-                    Title = "Title here",
-                    Content = "Put something here",
+                    Title = "DB Backup Location Not Set",
+                    Content = "You must set the database backup location",
+                    PrimaryButtonText = string.Empty,
+                    SecondaryButtonText = string.Empty,
                     CloseButtonText = "Ok"
                 };
 
