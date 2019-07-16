@@ -131,5 +131,10 @@ namespace JobLogger.Views.Reports
             report.ItemsSource = reportData;
             //DisplayTimesheet(reportData);
         }
+
+        private void TaskTimeSpent_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

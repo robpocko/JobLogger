@@ -61,6 +61,7 @@
                     </muxc:MenuBarItem>
 
                     <muxc:MenuBarItem Title="Tasks">
+                        <MenuFlyoutItem Text="Total Work Times" Click="TaskTimeSpent_Click"/>
                     </muxc:MenuBarItem>
                 </muxc:MenuBar>
                 <CalendarDatePicker 

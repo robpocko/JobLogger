@@ -58,7 +58,7 @@ namespace JobLogger.BF
             {
                 return db.CheckIns
                             .Where(i => i.ID == id)
-                            .Include(checkIn => checkIn.TaskLog)
+                            .Include(checkIn => checkIn.TaskLog).ThenInclude(log => log.Task)
                             .Include(checkIn => checkIn.TaskCheckIns)
                             .Single();
             }
