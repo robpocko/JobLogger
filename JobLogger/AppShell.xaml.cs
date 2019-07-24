@@ -30,6 +30,12 @@ namespace JobLogger
             {
                 new NavMenuItem()
                 {
+                    Symbol = Symbol.Calendar,
+                    Label = "Task Logs",
+                    DestPage = typeof(Views.TaskLogs.TaskLogsList)
+                },
+                new NavMenuItem()
+                {
                     Symbol = Symbol.PreviewLink,
                     Label = "Features",
                     DestPage = typeof(Views.Features.FeaturesList)
@@ -45,12 +51,6 @@ namespace JobLogger
                     Symbol = Symbol.List,
                     Label = "Tasks and Bugs",
                     DestPage = typeof(Views.Tasks.TasksList)
-                },
-                new NavMenuItem()
-                {
-                    Symbol = Symbol.Calendar,
-                    Label = "Task Logs",
-                    DestPage = typeof(Views.TaskLogs.TaskLogsList)
                 },
                 new NavMenuItem()
                 {
