@@ -85,6 +85,16 @@ namespace JobLogger.Views.TaskLogs
             }
         }
 
+        private async void SaveCloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            taskLog = await TaskLog.Save(taskLog);
+
+            if (this.Frame.CanGoBack)
+            {
+                this.Frame.GoBack();
+            }
+        }
+
         private void AddCheckInButton_Click(object sender, RoutedEventArgs e)
         {
             CheckInAPI newCheckIn = new CheckInAPI {

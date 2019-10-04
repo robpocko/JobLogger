@@ -113,7 +113,7 @@
 
                                     <TextBox Grid.Column="0" Text="{x:Bind taskStartTime}" HorizontalAlignment="Left"  Margin="5,5,0,5"  />
                                     <TextBox Grid.Column="1" Text="{x:Bind taskEndTime}" HorizontalAlignment="Left"  Margin="5,5,0,5"  />
-                                    <TextBox Grid.Column="2" Text="{x:Bind taskDuration}" HorizontalAlignment="Left"  Margin="5,5,0,5"  />
+                                    <TextBox Grid.Column="2" Text="{x:Bind taskDuration}" HorizontalAlignment="Left"  Margin="5,5,0,5" TextAlignment="Right"  />
                                     <TextBox Grid.Column="3" Text="{x:Bind description}" HorizontalAlignment="Left"  Margin="5,5,0,5"  />
                                 </Grid>
                             </DataTemplate>

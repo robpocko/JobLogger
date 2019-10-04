@@ -89,7 +89,7 @@ namespace JobLogger.BF
             {
                 IQueryable<TaskLogListModel> tasklogs =
                     from taskLog in db.TaskLogs
-                    select new TaskLogListModel { ID = taskLog.ID, Description = taskLog.Description, LogDate = taskLog.LogDate.Date };
+                    select new TaskLogListModel { ID = taskLog.ID, Description = taskLog.Description, LogDate = taskLog.LogDate.Date, StartTime = taskLog.StartTime };
 
                 int recCount = tasklogs.Count();
                 int fetchCount = pagesize;
@@ -104,7 +104,7 @@ namespace JobLogger.BF
 
                 if (fetchCount > 0)
                 {
-                    var results = tasklogs.OrderByDescending(c => c.ID)
+                    var results = tasklogs.OrderByDescending(c => c.LogDate).ThenByDescending(c => c.StartTime)
                                     .Skip(page * pagesize)
                                     .Take(fetchCount)
                                     .ToList();

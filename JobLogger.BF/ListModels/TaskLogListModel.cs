@@ -8,6 +8,7 @@ namespace JobLogger.BF.ListModels
         public long ID { get; internal set; }
         public string Description { get; internal set; }
         public DateTime LogDate { get; internal set; }
+        public TimeSpan StartTime { get; internal set; }
     }
 
     public class TaskLogList

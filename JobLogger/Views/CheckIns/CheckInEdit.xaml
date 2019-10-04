@@ -103,7 +103,7 @@
                     <ComboBox
                         x:Name="CodeBranchPicker"
                         Header="Code Branch"
-                        Width="200"
+                        Width="300"
                         Margin="20,0,0,0" SelectionChanged="CodeBranchPicker_SelectionChanged"
                         />
                 </StackPanel>
