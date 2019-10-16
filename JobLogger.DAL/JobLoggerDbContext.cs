@@ -14,6 +14,7 @@ namespace JobLogger.DAL
         public DbSet<TaskLogComment>        TaskLogComments { get; set; }
         public DbSet<TaskComment>           TaskComments { get; set; }
         public DbSet<RequirementComment>    RequirementComments { get; set; }
+        public DbSet<TimeLine>              TimeLines { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

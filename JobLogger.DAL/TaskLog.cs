@@ -28,6 +28,8 @@ namespace JobLogger.DAL
         public long? TaskID {get; set; }
         public Task Task { get; set; }
 
+        public TimeLine TimeLine { get; set; }
+
         public virtual ICollection<TaskLogComment> Comments { get; set; }
 
         public virtual ICollection<CheckIn> CheckIns { get; set; }
