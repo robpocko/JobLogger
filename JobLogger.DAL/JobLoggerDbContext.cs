@@ -18,13 +18,17 @@ namespace JobLogger.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=localhost;Database=RLP_JobLog_Dev;integrated security=SSPI");
+            optionsBuilder.UseSqlServer(@"Server=localhost;Database=RLP_JobLog;integrated security=SSPI");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<TaskCheckIn>()
                 .HasKey(t => new { t.TaskID, t.CheckInID });
+
+            modelBuilder.Entity<CodeBranch>()
+                .Property(b => b.IsActive)
+                .HasDefaultValue(true);
         }
     }
 }

@@ -12,6 +12,9 @@ namespace JobLogger.DAL
         [Display(Name = "Code Branch")]
         public string Name { get; set; }
 
+        [Display(Name = "Is Active")]
+        public bool IsActive { get; set; }
+
         public virtual ICollection<CheckIn> BranchCheckIns { get; set; }
     }
 }
