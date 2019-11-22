@@ -18,7 +18,11 @@ namespace JobLogger.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+#if DEBUG
+            optionsBuilder.UseSqlServer(@"Server=localhost;Database=RLP_JobLog_Dev;integrated security=SSPI");
+#else
             optionsBuilder.UseSqlServer(@"Server=localhost;Database=RLP_JobLog;integrated security=SSPI");
+#endif
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
