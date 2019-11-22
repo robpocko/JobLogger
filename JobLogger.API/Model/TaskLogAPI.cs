@@ -13,6 +13,7 @@ namespace JobLogger.API.Model
         public string                   Description { get; set; }
         public long?                    TaskID { get; set; }
         public TaskAPI                  Task { get; set; }
+        public TimeLineAPI              TimeLine { get; set; }
         public List<CheckInAPI>         CheckIns { get; set; }
         public List<TaskLogCommentAPI>  Comments { get; set; }
 
@@ -27,6 +28,7 @@ namespace JobLogger.API.Model
                 Description = item.Description,
                 TaskID = item.TaskID,
                 Task = TaskAPI.To(item.Task, false),
+                TimeLine = TimeLineAPI.To(item.TimeLine),
                 CheckIns = CheckInAPI.To(item.CheckIns),
                 Comments = TaskLogCommentAPI.To(item.Comments)
             };
@@ -43,6 +45,7 @@ namespace JobLogger.API.Model
                 Description = item.Description,
                 TaskID = item.TaskID,
                 Task = TaskAPI.From(item.Task, false),
+                TimeLine = TimeLineAPI.From(item.TimeLine),
                 CheckIns = item.CheckIns != null ? CheckInAPI.From(item.CheckIns).ToList() : null,
                 Comments = item.Comments != null ? TaskLogCommentAPI.From(item.Comments).ToList() : null
             };

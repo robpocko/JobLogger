@@ -76,7 +76,7 @@ namespace JobLogger.BF
             }
         }
 
-        public TimeLineList List(int page, int pagesize, string title = "", bool isActiveOnly = false)
+        public TimeLineList List(int page, int pagesize, string title = "", bool isActiveOnly = true)
         {
             try
             {
@@ -99,7 +99,7 @@ namespace JobLogger.BF
 
                 if (fetchCount > 0)
                 {
-                    var results = timeLines.OrderByDescending(c => c.ID)
+                    var results = timeLines.OrderBy(c => c.ID)
                                     .Skip(page * pagesize)
                                     .Take(fetchCount)
                                     .ToList();

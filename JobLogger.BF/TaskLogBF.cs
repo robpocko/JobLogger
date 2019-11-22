@@ -73,6 +73,7 @@ namespace JobLogger.BF
                 return db.TaskLogs
                             .Where(i => i.ID == id)
                             .Include(taskLog => taskLog.Task)
+                            .Include(taskLog => taskLog.TimeLine)
                             .Include(taskLog => taskLog.CheckIns)
                             .Include(taskLog => taskLog.Comments)
                             .Single();

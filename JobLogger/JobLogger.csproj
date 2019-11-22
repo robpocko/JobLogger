@@ -139,6 +139,8 @@
     <Compile Include="AppSystem\DataAccess\TaskLogDA.cs" />
     <Compile Include="AppSystem\DataAccess\TaskLogsDA.cs" />
     <Compile Include="AppSystem\DataAccess\TasksDA.cs" />
+    <Compile Include="AppSystem\DataAccess\TimeLineDA.cs" />
+    <Compile Include="AppSystem\DataAccess\TimeLinesDA.cs" />
     <Compile Include="AppSystem\DataAccess\TimesheetDA.cs" />
     <Compile Include="AppSystem\DataAccess\ToolsDA.cs" />
     <Compile Include="AppSystem\DateConverter.cs" />
@@ -151,6 +153,7 @@
     <Compile Include="AppSystem\UI\RequirementIncrementalLoad.cs" />
     <Compile Include="AppSystem\UI\TaskIncrementalLoad.cs" />
     <Compile Include="AppSystem\UI\TaskLogIncrementalLoad.cs" />
+    <Compile Include="AppSystem\UI\TimeLineIncrementalLoad.cs" />
     <Compile Include="Controls\NavMenuListView.cs" />
     <Compile Include="Controls\PageHeader.xaml.cs">
       <DependentUpon>PageHeader.xaml</DependentUpon>
@@ -204,6 +207,9 @@
     </Compile>
     <Compile Include="Views\Tasks\TasksList.xaml.cs">
       <DependentUpon>TasksList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TimeLines\TimeLinesList.xaml.cs">
+      <DependentUpon>TimeLinesList.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -302,6 +308,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Tasks\TasksList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TimeLines\TimeLinesList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -66,6 +66,12 @@ namespace JobLogger
                 },
                 new NavMenuItem()
                 {
+                    Symbol = Symbol.Clock,
+                    Label = "Time Lines",
+                    DestPage = typeof(Views.TimeLines.TimeLinesList)
+                },
+                new NavMenuItem()
+                {
                     Symbol = Symbol.Page,
                     Label = "Reports",
                     DestPage=typeof(Views.Reports.Reports)
