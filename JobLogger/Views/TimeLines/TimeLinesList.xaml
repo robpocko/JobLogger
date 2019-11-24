@@ -42,7 +42,7 @@
 
         <c:PageHeader x:Name="pageHeader"  Grid.Row="0">
             <c:PageHeader.HeaderContent>
-                <TextBlock x:Name="title" Style="{StaticResource PageTitleTextBlockStyle}" Text="Code Branches"/>
+                <TextBlock x:Name="title" Style="{StaticResource PageTitleTextBlockStyle}" Text="Time Lines"/>
             </c:PageHeader.HeaderContent>
         </c:PageHeader>
 
@@ -54,10 +54,51 @@
             </Grid.RowDefinitions>
 
             <RelativePanel BorderThickness="0" Margin="0,20,0,20">
+                <TextBlock 
+                    Name="TextBlockSearch"
+                    Text="Search:" 
+                    FontSize="16" 
+                    Margin="0,0,20,0" 
+                    RelativePanel.AlignLeftWithPanel="True"
+                    RelativePanel.AlignVerticalCenterWithPanel="True"
+                />
+
+                <TextBox 
+                    x:Name="TextBoxTimeLineTitleSearch" 
+                    Width="250" 
+                    FontSize="16" 
+					KeyUp="TextBoxTimeLineTitleSearch_KeyUp"
+                    RelativePanel.RightOf="TextBlockSearch"/>
+
+                <Button 
+                    Name="ButtonSearch" 
+                    Background="Transparent" 
+                    VerticalAlignment="Center" 
+                    FontFamily="Segoe MDL2 Assets" 
+                    FontSize="20" Content="&#xE1A3;" 
+                    Click="ButtonSearch_Click" 
+                    RelativePanel.RightOf="TextBoxTimeLineTitleSearch"
+                    RelativePanel.AlignVerticalCenterWithPanel="True"
+                    />
+
+                <CheckBox
+                    Name ="CheckBoxShowInactive"
+                    Content="Show Inactive Time Lines"
+                    IsChecked="False"
+                    Background="Transparent"
+                    Margin="25,0,0,0"
+                    VerticalAlignment="Center"
+                    RelativePanel.RightOf="ButtonSearch"
+                    RelativePanel.AlignVerticalCenterWithPanel="True"
+                    Checked="CheckBoxShowInactive_Checked"
+                    Unchecked="CheckBoxShowInactive_Unchecked"
+                    />
+
+
                 <Button 
                     Name="ButtonAddTimeLine"
                     RelativePanel.AlignRightWithPanel="True">
-                    <TextBlock Tapped="TextBlock_Tapped">
+                    <TextBlock Tapped="TextBlock_Tapped" SelectionChanged="TextBlock_SelectionChanged">
                         <Run FontFamily="Segoe MDL2 Assets">&#xE710;</Run> Add New Time Line
                     </TextBlock>
                 </Button>
@@ -70,7 +111,7 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Column="0" Text="ID" Margin="5,5,0,5" Foreground="White" />
-                <TextBlock Grid.Column="1" Text="Code Branch"  Margin="5,5,0,5" Foreground="White" />
+                <TextBlock Grid.Column="1" Text="Title"  Margin="5,5,0,5" Foreground="White" />
             </Grid>
 
             <ListView 

@@ -53,9 +53,49 @@
             </Grid.RowDefinitions>
 
             <RelativePanel BorderThickness="0" Margin="0,20,0,20">
+                <TextBlock 
+                    Name="TextBlockSearch"
+                    Text="Search:" 
+                    FontSize="16" 
+                    Margin="0,0,20,0" 
+                    RelativePanel.AlignLeftWithPanel="True"
+                    RelativePanel.AlignVerticalCenterWithPanel="True"
+                />
+
+                <TextBox 
+                    x:Name="TextBoxCodeBranchSearch" 
+                    Width="250" 
+                    FontSize="16" 
+					KeyUp="TextBoxCodeBranchSearch_KeyUp"
+                    RelativePanel.RightOf="TextBlockSearch"/>
+
+                <Button 
+                    Name="ButtonSearch" 
+                    Background="Transparent" 
+                    VerticalAlignment="Center" 
+                    FontFamily="Segoe MDL2 Assets" 
+                    FontSize="20" Content="&#xE1A3;" 
+                    Click="ButtonSearch_Click" 
+                    RelativePanel.RightOf="TextBoxCodeBranchSearch"
+                    RelativePanel.AlignVerticalCenterWithPanel="True"
+                    />
+
+                <CheckBox
+                    Name ="CheckBoxShowInactive"
+                    Content="Show Inactive Code Branches"
+                    IsChecked="False"
+                    Background="Transparent"
+                    Margin="25,0,0,0"
+                    VerticalAlignment="Center"
+                    RelativePanel.RightOf="ButtonSearch"
+                    RelativePanel.AlignVerticalCenterWithPanel="True"
+                    Checked="CheckBoxShowInactive_Checked"
+                    Unchecked="CheckBoxShowInactive_Unchecked"
+                    />
+
                 <Button 
                     Name="ButtonAddRequirement"
-                    RelativePanel.AlignRightWithPanel="True">
+                    RelativePanel.AlignRightWithPanel="True" Click="ButtonAddRequirement_Click">
                     <TextBlock>
                         <Run FontFamily="Segoe MDL2 Assets">&#xE710;</Run> Add New Code Branch
                     </TextBlock>

@@ -45,5 +45,30 @@ namespace JobLogger.Views.TimeLines
         {
 
         }
+
+        private void TextBlock_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void TextBoxTimeLineTitleSearch_KeyUp(object sender, KeyRoutedEventArgs e)
+        {
+
+        }
+
+        private void ButtonSearch_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CheckBoxShowInactive_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CheckBoxShowInactive_Unchecked(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

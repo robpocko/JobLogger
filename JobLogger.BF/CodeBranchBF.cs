@@ -38,6 +38,28 @@ namespace JobLogger.BF
             }
         }
 
+        public CodeBranch Update(CodeBranch item)
+        {
+            CodeBranch updated = FetchAndUpdate(item);
+
+            if (updated.IsValid())
+            {
+                try
+                {
+                    db.SaveChanges();
+                    return updated;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+            else
+            {
+                throw new Exception("CodeBranch is invalid");
+            }
+        }
+
         public CodeBranch Get(long id)
         {
             try
@@ -52,12 +74,13 @@ namespace JobLogger.BF
             }
         }
 
-        public CodeBranchList List(int page, int pagesize)
+        public CodeBranchList List(int page, int pagesize, bool includeInActive = false)
         {
             try
             {
                 IQueryable<CodeBranchListModel> codeBranches =
                     from codebranch in db.CodeBranches
+                    where includeInActive || codebranch.IsActive
                     select new CodeBranchListModel { ID = codebranch.ID, Name = codebranch.Name };
 
                 int recCount = codeBranches.Count();
@@ -89,6 +112,16 @@ namespace JobLogger.BF
             {
                 throw ex;
             }
+        }
+
+        internal CodeBranch FetchAndUpdate(CodeBranch item)
+        {
+            CodeBranch fetched = Get(item.ID);
+
+            fetched.Name = item.Name;
+            fetched.IsActive = item.IsActive;
+
+            return fetched;
         }
     }
 }

@@ -58,6 +58,26 @@ namespace JobLogger.API.Controllers
             }
         }
 
+        [HttpPut("{id}")]
+        public IActionResult Put(long id, [FromBody] CodeBranchAPI item)
+        {
+            if (item == null)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                CodeBranch updateItem = new CodeBranchBF(DB).Update(CodeBranchAPI.To(item));
+
+                return new ObjectResult(CodeBranchAPI.From(updateItem));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
         [HttpGet]
         public CodeBranchList Get(int page, int pagesize)
         {

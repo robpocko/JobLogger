@@ -166,6 +166,9 @@
     <Compile Include="Views\CheckIns\CheckInsList.xaml.cs">
       <DependentUpon>CheckInsList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\CodeBranches\CodeBranchEdit.xaml.cs">
+      <DependentUpon>CodeBranchEdit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CodeBranches\CodeBranchesList.xaml.cs">
       <DependentUpon>CodeBranchesList.xaml</DependentUpon>
     </Compile>
@@ -252,6 +255,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CheckIns\CheckInsList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CodeBranches\CodeBranchEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

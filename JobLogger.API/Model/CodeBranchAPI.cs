@@ -7,6 +7,7 @@ namespace JobLogger.API.Model
     public class CodeBranchAPI : APIBase
     {
         public string           Name { get; set; }
+        public bool             IsActive { get; set; }
         public List<CheckInAPI> BranchCheckIns { get; set; }
 
         public static CodeBranch To(CodeBranchAPI item)
@@ -15,6 +16,7 @@ namespace JobLogger.API.Model
             {
                 ID = item.ID,
                 Name = item.Name,
+                IsActive = item.IsActive,
                 BranchCheckIns = CheckInAPI.To(item.BranchCheckIns)
             };
         }
@@ -24,7 +26,8 @@ namespace JobLogger.API.Model
             return new CodeBranchAPI
             {
                 ID = item.ID,
-                Name = item.Name
+                Name = item.Name,
+                IsActive = item.IsActive
             };
         }
 

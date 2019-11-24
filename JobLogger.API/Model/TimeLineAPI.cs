@@ -13,22 +13,26 @@ namespace JobLogger.API.Model
 
         public static TimeLine To(TimeLineAPI item)
         {
-            return new TimeLine
-            {
-                ID = item.ID,
-                Title = item.Title,
-                IsActive = item.IsActive
-            };
+            return item == null ?
+                null :
+                new TimeLine
+                {
+                    ID = item.ID,
+                    Title = item.Title,
+                    IsActive = item.IsActive
+                };
         }
 
         public static TimeLineAPI From(TimeLine item)
         {
-            return new TimeLineAPI
-            {
-                ID = item.ID,
-                Title = item.Title,
-                IsActive = item.IsActive
-            };
+            return item == null ?
+                null :
+                new TimeLineAPI
+                {
+                    ID = item.ID,
+                    Title = item.Title,
+                    IsActive = item.IsActive
+                };
         }
     }
 }

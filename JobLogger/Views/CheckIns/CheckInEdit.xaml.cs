@@ -52,7 +52,7 @@ namespace JobLogger.Views.CheckIns
 
         private async Task LoadComboSources()
         {
-            CodeBranchIncrementalLoad CodeBranchList = new CodeBranchIncrementalLoad();
+            CodeBranchIncrementalLoad CodeBranchList = new CodeBranchIncrementalLoad("", false);
 
             await CodeBranchList.LoadMoreItemsAsync();
 
