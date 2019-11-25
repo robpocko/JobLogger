@@ -51,7 +51,7 @@ namespace JobLogger.AppSystem.DataAccess
 
     internal class CodeBranches
     {
-        internal static async Task<CodeBranchesListAPI> Get(int page, int pageSize)
+        internal static async Task<CodeBranchesListAPI> Get(int page, int pageSize, bool showInactive, string name = "")
         {
             CodeBranchesListAPI data = null;
             HttpBaseProtocolFilter RootFilter = new HttpBaseProtocolFilter();
@@ -62,12 +62,30 @@ namespace JobLogger.AppSystem.DataAccess
 
             using (HttpClient client = new HttpClient(RootFilter))
             {
-                Uri uri = new Uri(string.Format(
-                    "{0}/{1}?page={2}&pagesize={3}",
+                Uri uri = null;
+
+                if (name == null || name.Length == 0)
+                {
+                    uri = new Uri(string.Format(
+                    "{0}/{1}?page={2}&pagesize={3}&showInActive={4}",
                     AppSettings.ServerUrl,
                             APICommon.CODEBRANCH_PATH,
                             page,
-                            pageSize));
+                            pageSize,
+                            showInactive));
+                }
+                else
+                {
+                    uri = new Uri(string.Format(
+                    "{0}/{1}?page={2}&pagesize={3}&name={4}&showInActive={5}",
+                    AppSettings.ServerUrl,
+                            APICommon.CODEBRANCH_PATH,
+                            page,
+                            pageSize,
+                            name,
+                            showInactive));
+                }
+
 
                 try
                 {

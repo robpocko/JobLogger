@@ -79,9 +79,9 @@ namespace JobLogger.API.Controllers
         }
 
         [HttpGet]
-        public CodeBranchList Get(int page, int pagesize)
+        public CodeBranchList Get(int page, int pagesize, string name = "", bool showInActive = false)
         {
-            return new CodeBranchBF(DB).List(page, pagesize);
+            return new CodeBranchBF(DB).List(page, pagesize, name, showInActive);
         }
     }
 }

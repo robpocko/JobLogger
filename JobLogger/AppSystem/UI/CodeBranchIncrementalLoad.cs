@@ -21,7 +21,7 @@ namespace JobLogger.AppSystem.UI
         {
             int page = this.Count / APICommon.FETCH_SIZE;
 
-            CodeBranchesListAPI data = await CodeBranches.Get(page, APICommon.FETCH_SIZE);
+            CodeBranchesListAPI data = await CodeBranches.Get(page, APICommon.FETCH_SIZE, showInactive, codeBranch);
 
             this.count = data.recordCount;
 

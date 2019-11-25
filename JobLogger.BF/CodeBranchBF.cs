@@ -74,13 +74,14 @@ namespace JobLogger.BF
             }
         }
 
-        public CodeBranchList List(int page, int pagesize, bool includeInActive = false)
+        public CodeBranchList List(int page, int pagesize, string name = "", bool includeInActive = false)
         {
             try
             {
                 IQueryable<CodeBranchListModel> codeBranches =
                     from codebranch in db.CodeBranches
-                    where includeInActive || codebranch.IsActive
+                    where (name == "" || codebranch.Name.ToLower().Contains(name.ToLower())) &&  
+                          (includeInActive || codebranch.IsActive)
                     select new CodeBranchListModel { ID = codebranch.ID, Name = codebranch.Name };
 
                 int recCount = codeBranches.Count();
